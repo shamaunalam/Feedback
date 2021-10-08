@@ -48,4 +48,5 @@ class FeedBackForm(ModelForm):
             'A10':forms.RadioSelect(attrs={'class': 'inline'}),
             'A11':forms.RadioSelect(attrs={'class': 'inline'}),
             'A12':forms.RadioSelect(attrs={'class': 'inline'}),
+            'comments':forms.TextInput(attrs={'class':'input100'})
             }
