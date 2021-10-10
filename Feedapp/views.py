@@ -20,4 +20,4 @@ def getFeedback(request):
         else:
             form = FeedBackForm(initial={'user':request.user,'course_id':'Others'})
 
-            return render(request,'index.html',{'form':form})
+            return render(request,'formpage.html',{'form':form})
