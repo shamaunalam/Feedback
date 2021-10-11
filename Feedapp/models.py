@@ -10,6 +10,7 @@ class Course(models.Model):
 
     course_id = models.CharField(max_length=50,primary_key=True)
     course_name = models.CharField(max_length=50,blank=False)
+    faculty    = models.ForeignKey("Employee.EmployeeProfile", verbose_name=_("Faculty"), on_delete=models.CASCADE)
     start_date = models.DateField(blank=True)
     end_date   = models.DateField(blank=True)
     def __str__(self):
