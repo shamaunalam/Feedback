@@ -3,6 +3,7 @@ from .forms import FeedBackForm
 from Trainee.models import TraineeProfile
 
 from django.contrib.auth import authenticate,login,logout
+from django.contrib import messages
 # Create your views here.
 def Login(request):
     if request.method=='POST':
@@ -19,7 +20,11 @@ def Login(request):
 
 def getFeedback(request):
     if request.user.is_authenticated:
-
+        if request.method=='POST':
+            form = FeedBackForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Thanks for providing your valuable feedback!')
         if not request.user.is_staff:
             pro = TraineeProfile.objects.get(user=request.user)
             try:
