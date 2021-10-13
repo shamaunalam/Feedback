@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render,HttpResponse
 from .forms import FeedBackForm
-from Trainee.models import TraineeProfile
+from Trainee.models import TraineeProfile,CourseTaken
 
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
@@ -26,17 +26,18 @@ def getFeedback(request):
                 form.save()
                 messages.success(request, 'Thanks for providing your valuable feedback!')
         if not request.user.is_staff:
-            pro = TraineeProfile.objects.get(user=request.user)
+            coursetaken = CourseTaken.objects.filter(user=request.user,course='PGDTD-30')[0]
             try:
                 name = request.user.first_name+' '+request.user.last_name
             except:
                 name = request.user.username
             
-            form = FeedBackForm(initial={'user':request.user,'course_id':pro.course.course_id})
-            print(name)
+            form = FeedBackForm(initial={'user':request.user,'course_id':coursetaken.course})
+            
             return render(request,'basic.html',{'name':name,'form':form})
         
         else:
             form = FeedBackForm(initial={'user':request.user,'course_id':'Others'})
 
             return render(request,'basic.html',{'form':form})
+
