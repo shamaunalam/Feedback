@@ -3,7 +3,7 @@ from Feedapp.models import FeedBackQuestions,Course,FeedBack
 from Trainee.models import CourseTaken
 from django.contrib.auth.models import User
 import openpyxl
-
+from datetime import datetime
 
 # util functions
 
@@ -88,13 +88,19 @@ def ViewConsolidatedFeedback(request):
         q12           = question_list[11]
         feedbacks = FeedBack.objects.filter(course_id=course_id,subject=subject)
         if feedbacks.exists:
-            name_of_course = " "+feedbacks[0].course_id.course_id +" "+ feedbacks[0].subject
+            name_of_course = " "+feedbacks[0].course_id.course_id
             name_of_faculty = feedbacks[0].course_id.faculty.user.first_name+" "+feedbacks[0].course_id.faculty.user.last_name
+            start_date = feedbacks[0].course_id.start_date
+            end_date = feedbacks[0].course_id.end_date
+            duration = start_date - end_date
+            number   = len(feedbacks)
             feedback_con = list(create_consolidated(feedbacks).values())
             qna = dict.fromkeys(q1_11)
             for index,key in enumerate(qna):
                 qna[key]=feedback_con[index]
-            return render(request,'feedbackConsolidated copy.html',{"name_of_course":name_of_course,"name_of_faculty":name_of_faculty,'Fac_qna':qna,'q12':q12,'a12':feedback_con[11]})
+            return render(request,'feedbackConsolidated copy.html',{"name_of_course":name_of_course,
+            "name_of_faculty":name_of_faculty,'Fac_qna':qna,'q12':q12,'a12':feedback_con[11],
+            'duration':duration,"start":start_date,"end":end_date,'number':number})
         else:
             return render(request,'getreport.html')
     else:
