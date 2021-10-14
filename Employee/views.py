@@ -101,7 +101,7 @@ def ViewConsolidatedFeedback(request):
         return render(request,'getreport.html')
 
 def RegisterBulkStudents(request):
-
+    """function to register bulk students"""
     if request.method=='POST':
         excl = request.FILES["excel_file"]
         wb = openpyxl.load_workbook(excl)
@@ -118,7 +118,6 @@ def RegisterBulkStudents(request):
         for data in excel_data:
 
             try:
-
                 user = User.objects.get(username=data[0])
                 coursetaken = CourseTaken.objects.create(user = user, course=Course.objects.get(course_id=data[1]))
                 coursetaken.save()
