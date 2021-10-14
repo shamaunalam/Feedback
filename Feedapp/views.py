@@ -12,7 +12,12 @@ def Login(request):
         user = authenticate(username=username,password=_password)
         if user is not None:
             login(request,user)
-            return redirect('submitfeedback')
+            if user.is_staff:
+                return redirect('view-consolidated')
+            else:
+                return redirect('submitfeedback')
+        else:
+            return redirect('login')
     else:
 
         return render(request,'login.html')
