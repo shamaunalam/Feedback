@@ -1,9 +1,10 @@
-from django.shortcuts import render,HttpResponse
+from django.contrib import messages
+from django.shortcuts import redirect, render,HttpResponse
 from Feedapp.models import FeedBackQuestions,Course,FeedBack
 from Trainee.models import CourseTaken
 from django.contrib.auth.models import User
 import openpyxl
-from datetime import datetime
+
 
 # util functions
 
@@ -75,36 +76,40 @@ def create_consolidated(feedbacks):
     'a7':list(a7_dic.values()),"a8":list(a8_dic.values()),'a9':list(a9_dic.values()),'a10':list(a10_dic.values()),'a11':list(a11_dic.values()),'a12':list(a12_dic.values())}
 # Create your views here.
 def home(request):
-    return HttpResponse('this is employee home')
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            name = request.user.username
+    return render(request,'EmployeeDash.html',{'name':name})
 
 def ViewConsolidatedFeedback(request):
     if request.method=="POST":
 
         course_id = request.POST['course']
-        subject   = request.POST['subject']
-        faculty_questions =  FeedBackQuestions.objects.values_list("Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8","Q9","Q10","Q11","Q12")
+        faculty_questions =  FeedBackQuestions.objects.values_list("Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8","Q9","Q10","Q11","Q12","Q13","Q14","Q15","Q16","Q17","Q18")
         question_list = faculty_questions[0]
         q1_11         = question_list[:11]
         q12           = question_list[11]
-        feedbacks = FeedBack.objects.filter(course_id=course_id,subject=subject)
+        amnety_ques = question_list[12:16]
+        feedbacks = FeedBack.objects.filter(course_id=course_id)
         if feedbacks.exists:
             name_of_course = " "+feedbacks[0].course_id.course_id
             name_of_faculty = feedbacks[0].course_id.faculty.user.first_name+" "+feedbacks[0].course_id.faculty.user.last_name
             start_date = feedbacks[0].course_id.start_date
             end_date = feedbacks[0].course_id.end_date
-            duration = start_date - end_date
+            timing = feedbacks[0].course_id.start_time.strftime("%I:%M %p")+' ~ '+feedbacks[0].course_id.end_time.strftime("%I:%M %p")
+            duration = (start_date - end_date).days
             number   = len(feedbacks)
             feedback_con = list(create_consolidated(feedbacks).values())
             qna = dict.fromkeys(q1_11)
             for index,key in enumerate(qna):
                 qna[key]=feedback_con[index]
             return render(request,'feedbackConsolidated copy.html',{"name_of_course":name_of_course,
-            "name_of_faculty":name_of_faculty,'Fac_qna':qna,'q12':q12,'a12':feedback_con[11],
-            'duration':duration,"start":start_date,"end":end_date,'number':number})
+            "name_of_faculty":name_of_faculty,'Fac_qna':qna,'q12':q12,'a12':feedback_con[11],"amnetyQues":amnety_ques,
+            'duration':duration,"start":start_date,"end":end_date,"timing":timing,'number':number})
         else:
-            return render(request,'getreport.html')
+            return redirect('employee-home')
     else:
-        return render(request,'getreport.html')
+        return redirect('employee-home')
 
 def RegisterBulkStudents(request):
     """function to register bulk students"""
@@ -118,23 +123,41 @@ def RegisterBulkStudents(request):
             row_data = list()
             for cell in row:
                 row_data.append(str(cell.value))
-                print(cell.value)
             excel_data.append(row_data)
         header = excel_data.pop(0)
+        duplicates = 0
         for data in excel_data:
 
             try:
                 user = User.objects.get(username=data[0])
-                coursetaken = CourseTaken.objects.create(user = user, course=Course.objects.get(course_id=data[1]))
-                coursetaken.save()
+                try:
+                    course = Course.objects.get(course_id=data[1])
+                    try:
+                        coursetaken = CourseTaken.objects.get(user = user, course=course)
+                        duplicates += 1
+                    except CourseTaken.DoesNotExist:
+                        coursetaken = CourseTaken.objects.create(user = user , course=Course.objects.get(course_id=data[1]))
+                    finally:
+                        coursetaken.save()
+                except Course.DoesNotExist:
+                    messages.error(request,"{} Course Does not Exist Please ask admin to add the course!".format(data[1]))
+                    return render(request,'bulk_test.html',{"excel_data":excel_data})
             except User.DoesNotExist:
                 user = User.objects.create(username=data[0],first_name=data[2],last_name=data[3])
-                coursetaken = CourseTaken.objects.create(user = user , course=Course.objects.get(course_id=data[1]))
-                user.set_password("p@55word")
-                user.save()
-                coursetaken.save()
- 
-
-        return render(request,'bulk_test.html',{"excel_data":excel_data})
+                user.set_password("P@55word")
+                try:
+                    course = Course.objects.get(course_id=data[1])
+                except Course.DoesNotExist:
+                    messages.error(request,"{} Course Does not Exist Please ask admin to add the course!".format(data[1]))
+                    return render(request,'bulk_test.html',{"excel_data":excel_data})
+                finally:
+                    coursetaken = CourseTaken.objects.create(user = user , course=Course.objects.get(course_id=data[1]))
+                    user.save()
+                    coursetaken.save()
+        if duplicates>0:
+            messages.error(request,'{} users already registered for course'.format(duplicates))
+        else:
+            messages.success(request,"Trainees Successfully Registered!")
+        return render(request,'bulk_test.html',{"name":request.user.username,"excel_data":excel_data})   
     else:
-        return render(request,'bulk_test.html',{})
+        return render(request,'bulk_test.html',{"name":request.user.username})

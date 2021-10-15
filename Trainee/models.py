@@ -15,3 +15,5 @@ class CourseTaken(models.Model):
     course = models.ForeignKey(Course,on_delete=models.CASCADE,default='Others')
     def __str__(self):
         return self.user.username+' '+self.course.course_id
+    class Meta:
+        verbose_name_plural = 'Taken Courses by Trainees'

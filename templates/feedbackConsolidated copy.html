@@ -9,7 +9,7 @@
 </head>
 <body>
     <br>
-    <table cellpadding = "0" cellspacing = "0" style="width: 1024px; height: 825px; border-color: rgb(53, 139, 50); margin-left: auto; margin-right: auto;" border="3">
+    <table cellpadding = "0" cellspacing = "0" style="width: 1024px; height: 825px; border-color: rgb(53, 139, 50); margin-left: auto; margin-right: auto; background-color: rgba(189, 252, 186, 0.411);" border="3">
         <tbody>
             <tr style="height: 81px;">
                 <th style="width: 175px; height: 80px;">
@@ -28,7 +28,7 @@
             </tr>
             <tr style="height: 24px;">
                 <td style="width: 241.469px; height: 24px;" colspan="2"><b>Name of course</b>:{{ name_of_course }}</td>
-                <td style="width: 245.375px; height: 24px;" colspan="6"><b>Timing</b>:___________</td>
+                <td style="width: 245.375px; height: 24px;" colspan="6"><b>Timing</b>: {{timing}}</td>
                 <td style="width: 214.156px; height: 24px;" colspan="4"><b>Venue</b>: Lab-25</td>
             </tr>
             <tr style="height: 23px;">
@@ -115,7 +115,17 @@
                 <td style="width: 77.3438px; height: 23px; text-align: center; vertical-align: middle;" colspan="2">Good</td>
                 <td style="width: 168.438px; height: 23px; text-align: center; vertical-align: middle;" colspan="3">Very Good</td>
             </tr>
+            {% for q in amnetyQues %}
             <tr style="height: 23px;">
+                <td style="width: 103.75px; height: 23px; text-align: center; vertical-align: middle;">{{forloop.counter}}.</td>
+                <td style="width: 137.719px; height: 23px; text-align: left; vertical-align: middle;">{{q}}</td>
+                <td style="width: 86.8281px; height: 23px; text-align: left; vertical-align: middle;" colspan="2">&nbsp;</td>
+                <td style="width: 126.922px; height: 23px; text-align: left; vertical-align: middle;" colspan="3">&nbsp;</td>
+                <td style="width: 77.3438px; height: 23px; text-align: left; vertical-align: middle;" colspan="2">&nbsp;</td>
+                <td style="width: 168.438px; height: 23px; text-align: left; vertical-align: middle;" colspan="3">&nbsp;</td>
+            </tr>
+            {% endfor %}
+            <!-- <tr style="height: 23px;">
                 <td style="width: 103.75px; height: 23px; text-align: center; vertical-align: middle;">&nbsp;</td>
                 <td style="width: 137.719px; height: 23px; text-align: center; vertical-align: middle;">&nbsp;</td>
                 <td style="width: 86.8281px; height: 23px; text-align: center; vertical-align: middle;" colspan="2">&nbsp;</td>
@@ -138,24 +148,16 @@
                 <td style="width: 126.922px; height: 23px; text-align: center; vertical-align: middle;" colspan="3">&nbsp;</td>
                 <td style="width: 77.3438px; height: 23px; text-align: center; vertical-align: middle;" colspan="2">&nbsp;</td>
                 <td style="width: 168.438px; height: 23px; text-align: center; vertical-align: middle;" colspan="3">&nbsp;</td>
-            </tr>
-            <tr style="height: 23px;">
-                <td style="width: 103.75px; height: 23px; text-align: center; vertical-align: middle;">&nbsp;</td>
-                <td style="width: 137.719px; height: 23px; text-align: center; vertical-align: middle;">&nbsp;</td>
-                <td style="width: 86.8281px; height: 23px; text-align: center; vertical-align: middle;" colspan="2">&nbsp;</td>
-                <td style="width: 126.922px; height: 23px; text-align: center; vertical-align: middle;" colspan="3">&nbsp;</td>
-                <td style="width: 77.3438px; height: 23px; text-align: center; vertical-align: middle;" colspan="2">&nbsp;</td>
-                <td style="width: 168.438px; height: 23px; text-align: center; vertical-align: middle;" colspan="3">&nbsp;</td>
-            </tr>
+            </tr> -->
             <tr style="height: 23px;">
                 <td style="width: 701px; height: 23px; text-align: center; vertical-align: middle;" colspan="12"><b>Others</b></td>
             </tr>
             <tr style="height: 23px;">
                 <td style="width: 103.75px; height: 46px; text-align: center; vertical-align: middle;" rowspan="2">1.</td>
                 <td style="width: 137.719px; height: 46px; text-align: center; vertical-align: middle;" rowspan="2">Whether Course Duration is</td>
-                <td style="width: 132.422px; height: 23px; text-align: center; vertical-align: middle;" colspan="3">&nbsp;</td>
-                <td style="width: 158.672px; height: 23px; text-align: center; vertical-align: middle;" colspan="4">&nbsp;</td>
-                <td style="width: 168.438px; height: 23px; text-align: center; vertical-align: middle;" colspan="3">&nbsp;</td>
+                <td style="width: 132.422px; height: 23px; text-align: center; vertical-align: middle;" colspan="3">Too Short</td>
+                <td style="width: 158.672px; height: 23px; text-align: center; vertical-align: middle;" colspan="4">Adequate</td>
+                <td style="width: 168.438px; height: 23px; text-align: center; vertical-align: middle;" colspan="3">Too Long</td>
             </tr>
             <tr style="height: 23px;">
                 <td style="width: 132.422px; height: 23px; text-align: center; vertical-align: middle;" colspan="3">&nbsp;</td>
