@@ -28,10 +28,10 @@ class FeedBackForm(ModelForm):
             'A10':_(questions.Q10),
             'A11':_(questions.Q11),
             'A12':_(questions.Q12),
-            'A13':_(questions.Q13),
-            'A14':_(questions.Q14),
-            'A15':_(questions.Q15),
-            'A16':_(questions.Q16),
+            'A13':_("How do you rate "+questions.Q13+"?"),
+            'A14':_("How do you rate "+questions.Q14+"?"),
+            'A15':_("How do you rate "+questions.Q15+"?"),
+            'A16':_("How do you rate "+questions.Q16+"?"),
             'A17':_(questions.Q17),
             'A18':_(questions.Q18),
             }
@@ -56,5 +56,5 @@ class FeedBackForm(ModelForm):
             'A16':forms.Select(attrs={'class':'form-control'}),
             'A17':forms.Select(attrs={'class':'form-control'}),
             'A18':forms.Select(attrs={'class':'form-control'}),
-            'comments' :forms.TextInput(attrs={'class':'form-control'})
+            'comments' :forms.Textarea(attrs={'class':'form-control','rows':'5'})
             }

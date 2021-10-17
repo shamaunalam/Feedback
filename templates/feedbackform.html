@@ -39,7 +39,17 @@
                                 <form action="{% url 'submitfeedback' %}" method="post" enctype="multipart/form-data" class="form-horizontal">
                                     {% csrf_token %}
                                     {% for element in form %}
-                                    {% if not element.is_hidden %}
+                                    {% if element.label == 'Comments' %}
+                                    <div class="row form-group">
+                                        <div class="col-12 col-md-9">
+                                            <label for="{{ element.id_for_label }}" class=" form-control-label">{{ element.label }}</label>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            {{element}}
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    {% elif not element.is_hidden %}
                                     <div class="row form-group">
                                         <div class="col-12 col-md-9">
                                             <label for="{{ element.id_for_label }}" class=" form-control-label">{{ element.label }}</label>

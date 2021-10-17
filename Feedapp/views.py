@@ -50,7 +50,8 @@ def getFeedback(request):
                     messages.success(request, 'Thanks for providing your valuable feedback!')
                 return redirect('submitfeedback')
             else:
-                print(form.data)
+                messages.error(request, 'An Error occured while submitting the form')
+                return redirect('submitfeedback')
         if not request.user.is_staff:
             coursetaken = CourseTaken.objects.filter(user=request.user,course='PGDTD-30 AIML')[0]
             try:
