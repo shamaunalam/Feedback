@@ -127,7 +127,6 @@ def RegisterBulkStudents(request):
         header = excel_data.pop(0)
         duplicates = 0
         for data in excel_data:
-
             try:
                 user = User.objects.get(username=data[0])
                 try:
@@ -140,8 +139,9 @@ def RegisterBulkStudents(request):
                     finally:
                         coursetaken.save()
                 except Course.DoesNotExist:
-                    messages.error(request,"{} Course Does not Exist Please ask admin to add the course!".format(data[1]))
-                    return render(request,'bulk_test.html',{"excel_data":excel_data})
+                    messages.error(request,"""{} Course Does not Exist Please ask admin to add the course!\n
+                    Account for User {} could not be created""".format(data[1],data[0]))
+                    continue
             except User.DoesNotExist:
                 user = User.objects.create(username=data[0],first_name=data[2],last_name=data[3])
                 user.set_password("P@55word")

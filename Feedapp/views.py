@@ -1,6 +1,8 @@
 from django.shortcuts import redirect, render,HttpResponse
 from .forms import FeedBackForm
 from Trainee.models import TraineeProfile,CourseTaken
+from .models import FeedBack
+
 
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
@@ -37,9 +39,18 @@ def getFeedback(request):
     if request.user.is_authenticated:
         if request.method=='POST':
             form = FeedBackForm(request.POST)
+            # print(cleaned_data)
             if form.is_valid():
-                form.save()
-                messages.success(request, 'Thanks for providing your valuable feedback!')
+                cleaned_data = form.cleaned_data
+                try:
+                    feedback = FeedBack.objects.get(user=cleaned_data['user'],course_id = cleaned_data['course_id'])
+                    messages.error(request, 'Feedback for course {} already Submitted!'.format(cleaned_data['course_id']))
+                except FeedBack.DoesNotExist:
+                    form.save()
+                    messages.success(request, 'Thanks for providing your valuable feedback!')
+                return redirect('submitfeedback')
+            else:
+                print(form.data)
         if not request.user.is_staff:
             coursetaken = CourseTaken.objects.filter(user=request.user,course='PGDTD-30 AIML')[0]
             try:
@@ -49,10 +60,8 @@ def getFeedback(request):
             
             form = FeedBackForm(initial={'user':request.user,'course_id':coursetaken.course})
             
-            return render(request,'basic.html',{'name':name,'form':form})
+            return render(request,'feedbackform.html',{'name':name,'form':form,'course_id':coursetaken.course})
         
         else:
-            form = FeedBackForm(initial={'user':request.user,'course_id':'Others'})
-
-            return render(request,'basic.html',{'form':form})
+            return redirect('employee-home')
 

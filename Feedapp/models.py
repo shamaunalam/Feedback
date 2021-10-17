@@ -74,7 +74,7 @@ class FeedBack(models.Model):
     A16       = models.CharField(_("Sanitation"),max_length=4,choices=AmenitiesChoices.choices,default=AmenitiesChoices.AM3)
     A17       = models.CharField(_("Whether Course Duration is"),max_length=2,choices=(("TS","Too Short"),("AD","Adequate"),("TL","Too Long")))
     A18       = models.CharField(_("Course To Be recommended"),max_length=2,choices=(("Y","Yes"),("N","No")))
-    comments  = models.TextField(_("How confident do you feel about your grasp of this module content ?"),max_length=300,default="No Comments")
+    comments  = models.TextField(_("Comments"),max_length=300,default="No Comments")
     def __str__(self):
         return "{} {}".format(self.user.first_name+' '+self.user.last_name,self.course_id)
     class Meta:
