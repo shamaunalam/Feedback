@@ -556,7 +556,7 @@
                                         <div class="au-card m-b-30">
                                             <div class="au-card-inner">
                                                 <h3 class="title-2 m-b-40">Overall Training Feedback Score</h3>
-                                                <canvas id="lineChart"></canvas>
+                                                <canvas id="lineC"></canvas>
                                             </div>
                                         </div>
                                     </div>
@@ -564,7 +564,7 @@
                                         <div class="au-card m-b-30">
                                             <div class="au-card-inner">
                                                 <h3 class="title-2 m-b-40">Amenities Feedback Score</h3>
-                                                <canvas id="doughutChart"></canvas>
+                                                <canvas id="doughutC"></canvas>
                                             </div>
                                         </div>
                                     </div>
@@ -584,9 +584,9 @@
 try {
 
 //line chart
-var ctx = document.getElementById("lineChart");
+var ctx = document.getElementById("lineC");
 if (ctx) {
-  ctx.height = 300;
+  ctx.height = 150;
   var myChart = new Chart(ctx, {
     type: 'line',
     data: {
@@ -656,9 +656,9 @@ console.log(error);
 try {
 
 //doughut chart
-var ctx = document.getElementById("doughutChart");
+var ctx = document.getElementById("doughutC");
 if (ctx) {
-  ctx.height = 300;
+  ctx.height = 150;
   var myChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
