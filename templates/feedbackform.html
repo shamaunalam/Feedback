@@ -38,7 +38,29 @@
                             <div class="card-body card-block">
                                 <form action="{% url 'submitfeedback' %}" method="post" enctype="multipart/form-data" class="form-horizontal">
                                     {% csrf_token %}
-                                    {{form}}
+                                    {% for element in form %}
+                                    {% if not element.is_hidden %}
+                                    <div class="row form-group">
+                                        <div class="col-12 col-md-9">
+                                            <label for="{{ element.id_for_label }}" class=" form-control-label">{{ element.label }}</label>
+                                        </div>
+                                        <div class="col col-md-3">
+                                            {{ element }}
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    {% else %}
+                                    <div class="row form-group">
+                                        <div class="col-12 col-md-9">
+                                            <label for="{{ element.id_for_label }}" class=" form-control-label">{{ element.label }}</label>
+                                        </div>
+                                        <div class="col col-md-3">
+                                            {{element}}{{name}}
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    {% endif %}
+                                    {% endfor %}
                                     <button type="submit" class="btn btn-primary btn-sm">
                                         <i class="fa fa-dot-circle-o"></i> Submit
                                     </button>
