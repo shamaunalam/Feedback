@@ -140,11 +140,45 @@ def ViewConsolidatedFeedback(request):
             total_overall_score = total_faculty_score+feedback_con[11][8]
             avg_overall_score   = round((total_overall_score/(number*120))*10,2)
 
+            n_stars_faculty = [1 for i in range(int(str(round(avg_faculty_score/2,1)).split('.')[0]))]
+            if int(str(round(avg_faculty_score/2,1)).split('.')[1])>5:
+                n_stars_faculty.append(1)
+            elif int(str(round(avg_faculty_score/2,1)).split('.')[1])<=5 and int(str(round(avg_faculty_score/2,1)).split('.')[1])>0:
+                n_stars_faculty.append(0.5)
+            else:
+                n_stars_faculty.append(0)
+
+            if len(n_stars_faculty)>5:
+                n_stars_faculty.pop()
+
+            n_stars_center = [1 for i in range(int(str(round(feedback_con[11][9]/2,1)).split('.')[0]))]
+            if int(str(round(feedback_con[11][9]/2,1)).split('.')[1])>5:
+                n_stars_center.append(1)
+            elif int(str(round(feedback_con[11][9]/2,1)).split('.')[1])<=5 and int(str(round(feedback_con[11][9]/2,1)).split('.')[1])>0:
+                n_stars_center.append(0.5)
+            else:
+                n_stars_center.append(0)
+
+            if len(n_stars_center)>5:
+                n_stars_center.pop()
+
+            n_stars_overall = [1 for i in range(int(str(round(avg_overall_score/2,1)).split('.')[0]))]
+            if int(str(round(avg_overall_score/2,1)).split('.')[1])>5:
+                n_stars_overall.append(1)
+            elif int(str(round(avg_overall_score/2,1)).split('.')[1])<=5 and int(str(round(avg_overall_score/2,1)).split('.')[1])>0:
+                n_stars_overall.append(0.5)
+            else:
+                n_stars_overall.append(0)
+
+            if len(n_stars_overall)>5:
+                n_stars_overall.pop()
+            
             return render(request,'feedbackConsolidated copy.html',{"name_of_course":name_of_course,
             "name_of_faculty":name_of_faculty,'Fac_qna':qna,'q12':q12,'a12':feedback_con[11],"amnetyQna":amnety_qna,
             'others_qna':others_qna,'duration':duration,"start":start_date,"end":end_date,"timing":timing,'number':number,
             'total_faculty_score':total_faculty_score,'avg_faculty_score':avg_faculty_score,'total_overall_score':total_overall_score,
-            'avg_overall_score':avg_overall_score,'venue':venue})
+            'avg_overall_score':avg_overall_score,'venue':venue,'n_stars_faculty':n_stars_faculty,'n_stars_center':n_stars_center,
+            'n_stars_overall':n_stars_overall})
         else:
             return redirect('employee-home')
     else:

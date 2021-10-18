@@ -6,6 +6,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+<style>
+    .star {
+        font-size: x-large;
+        width: 50px;
+        display: inline-block;
+        color: gray;
+    }
+    .star:last-child {
+        margin-right: 0;
+    }
+    .star:before {
+        content:'\2605';
+    }
+    .star.on {
+        color: gold;
+    }
+    .star.half:after {
+        content:'\2605';
+        color: gold;
+        position: absolute;
+        margin-left: -20px;
+        width: 10px;
+        overflow: hidden;
+    }
+</style>
+
 </head>
 <body>
     <br>
@@ -183,15 +210,51 @@
             </tr>
             <tr style="height: 10px;">
                 <td style="width: 405.547px; height: 10px; text-align: left; vertical-align: middle;" colspan="5">&nbsp;<b>Rating of Faculty</b></td>
-                <td style="width: 295.453px; height: 10px; text-align: center; vertical-align: middle;" colspan="7">&nbsp;</td>
+                <td style="width: 295.453px; height: 10px; text-align: center; vertical-align: middle;" colspan="7">
+                    <div class="stars">
+                        {% for i in n_stars_faculty %}
+                        {% if i == 1 %}
+                        <span class="star on"></span>
+                        {% elif i == 0.5 %}
+                        <span class="star half"></span>
+                        {% else %}
+                        <span class="star"></span>
+                        {% endif %}
+                        {% endfor %}                  
+                    </div>  
+                </td>
             </tr>
             <tr style="height: 10px;">
                 <td style="width: 405.547px; height: 10px; text-align: left; vertical-align: middle;" colspan="5">&nbsp;<b>Rating of Fecilitation Center</b></td>
-                <td style="width: 295.453px; height: 10px; text-align: center; vertical-align: middle;" colspan="7">&nbsp;</td>
+                <td style="width: 295.453px; height: 10px; text-align: center; vertical-align: middle;" colspan="7">
+                    <div class="stars">
+                        {% for i in n_stars_center %}
+                        {% if i == 1 %}
+                        <span class="star on"></span>
+                        {% elif i == 0.5 %}
+                        <span class="star half"></span>
+                        {% else %}
+                        <span class="star"></span>
+                        {% endif %}
+                        {% endfor %}                  
+                    </div>              
+                </td>
             </tr>
             <tr style="height: 10px;">
                 <td style="width: 405.547px; height: 10px; text-align: left; vertical-align: middle;" colspan="5">&nbsp;<b>Overall Ratings</b></td>
-                <td style="width: 295.453px; height: 10px; text-align: center; vertical-align: middle;" colspan="7">&nbsp;</td>
+                <td style="width: 295.453px; height: 10px; text-align: center; vertical-align: middle;" colspan="7">
+                    <div class="stars">
+                        {% for i in n_stars_overall %}
+                        {% if i == 1 %}
+                        <span class="star on"></span>
+                        {% elif i == 0.5 %}
+                        <span class="star half"></span>
+                        {% else %}
+                        <span class="star"></span>
+                        {% endif %}
+                        {% endfor %}                  
+                    </div>  
+                </td>
             </tr>
         </tbody>
     </table>
