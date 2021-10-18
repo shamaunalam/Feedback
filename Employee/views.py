@@ -117,6 +117,7 @@ def ViewConsolidatedFeedback(request):
             end_date = feedbacks[0].course_id.end_date
             timing = feedbacks[0].course_id.start_time.strftime("%I:%M %p")+' ~ '+feedbacks[0].course_id.end_time.strftime("%I:%M %p")
             duration = (start_date - end_date).days
+            venue = feedbacks[0].course_id.venue
             number   = len(feedbacks)
             feedback_con = create_consolidated(feedbacks)
             total_faculty_score = feedback_con['total_faculty_score']
@@ -143,7 +144,7 @@ def ViewConsolidatedFeedback(request):
             "name_of_faculty":name_of_faculty,'Fac_qna':qna,'q12':q12,'a12':feedback_con[11],"amnetyQna":amnety_qna,
             'others_qna':others_qna,'duration':duration,"start":start_date,"end":end_date,"timing":timing,'number':number,
             'total_faculty_score':total_faculty_score,'avg_faculty_score':avg_faculty_score,'total_overall_score':total_overall_score,
-            'avg_overall_score':avg_overall_score})
+            'avg_overall_score':avg_overall_score,'venue':venue})
         else:
             return redirect('employee-home')
     else:
