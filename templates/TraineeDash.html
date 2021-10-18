@@ -1,0 +1,24 @@
+{% extends 'TraineeBase.html' %}
+{% block title %}Give Feedback{% endblock %}
+{% block content %}
+<div class="main-content">
+
+    <div class="card">
+        <div class="card-header">
+            <strong>Enter Course Id to Submit Feedback</strong>
+        </div>
+        <div class="card-body card-block">
+            <form action="{% url 'trainee-home' %}" method="post" class="form-inline">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="course" class="pr-1  form-control-label">Course Id</label>
+                    <input type="text" id="course" placeholder="Enter Course Id" name='pk' required="" class="form-control">
+                </div>
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="fa fa-dot-circle-o"></i> Submit
+                    </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -21,6 +21,14 @@ def create_consolidated(feedbacks):
     a10_counts = [[n.A10 for n in feedbacks].count(i) for i in range(2,11)]
     a11_counts = [[n.A11 for n in feedbacks].count(i) for i in range(2,11)]
     a12_counts = [[n.A12 for n in feedbacks].count(i) for i in range(2,11)]
+    a13_counts = [[n.A13 for n in feedbacks].count(i) for i in ["POOR","SATS","GOOD","EXCL"]]
+    a14_counts = [[n.A14 for n in feedbacks].count(i) for i in ["POOR","SATS","GOOD","EXCL"]]
+    a15_counts = [[n.A15 for n in feedbacks].count(i) for i in ["POOR","SATS","GOOD","EXCL"]]
+    a16_counts = [[n.A16 for n in feedbacks].count(i) for i in ["POOR","SATS","GOOD","EXCL"]]
+
+    a17_counts = [[n.A17 for n in feedbacks].count(i) for i in ["TS","AD","TL"]]
+    a18_counts = [[n.A18 for n in feedbacks].count(i) for i in ["Y","N"]]
+
     zeroone = lambda x:1 if x==0 else x
     a1_dic = {'c2_4':sum(a1_counts[:3]),'t2_4':round((a1_counts[0]*2+a1_counts[1]*3+a1_counts[2]*4)/zeroone((a1_counts[0]+a1_counts[1]+a1_counts[2])),1),'c5_6':sum(a1_counts[3:5]),'t5_6':round((a1_counts[3]*5+a1_counts[4]*6)/zeroone((a1_counts[3]+a1_counts[4])),1),'c7_8':sum(a1_counts[5:7]),'t7_8':round((a1_counts[5]*7+a1_counts[6]*7)/zeroone((a1_counts[5]+a1_counts[6])),2),'c9_10':sum(a1_counts[7:9]),'t9_10':round((a1_counts[7]*9+a1_counts[8]*10)/zeroone((a1_counts[7]+a1_counts[8])),1)}
     a1_dic.update({"st":a1_dic['t2_4']+a1_dic['t5_6']+a1_dic['t7_8']+a1_dic['t9_10']})
@@ -71,9 +79,17 @@ def create_consolidated(feedbacks):
     a12_dic.update({"st":a12_dic['t2_4']+a12_dic['t5_6']+a12_dic['t7_8']+a12_dic['t9_10']})
     a12_dic.update({'avg':round(a12_dic['st']/zeroone(sum(a12_counts)),2)})     
 
-    
+    a13_dic = {'cPoor':a13_counts[0],'cSats':a13_counts[1],'cGood':a13_counts[2],'cExcl':a13_counts[3]}
+    a14_dic = {'cPoor':a14_counts[0],'cSats':a14_counts[1],'cGood':a14_counts[2],'cExcl':a14_counts[3]}
+    a15_dic = {'cPoor':a15_counts[0],'cSats':a15_counts[1],'cGood':a15_counts[2],'cExcl':a15_counts[3]}
+    a16_dic = {'cPoor':a16_counts[0],'cSats':a16_counts[1],'cGood':a16_counts[2],'cExcl':a16_counts[3]}
+
+    a17_dic = {'cTS':a17_counts[0],'cAD':a17_counts[1],'cTL':a17_counts[2]}
+    a18_dic = {'cY':a18_counts[0],'cN':a18_counts[1]}
+
     return {"a1":list(a1_dic.values()),"a2":list(a2_dic.values()),"a3":list(a3_dic.values()),'a4':list(a4_dic.values()),'a5':list(a5_dic.values()),'a6':list(a6_dic.values()),
-    'a7':list(a7_dic.values()),"a8":list(a8_dic.values()),'a9':list(a9_dic.values()),'a10':list(a10_dic.values()),'a11':list(a11_dic.values()),'a12':list(a12_dic.values())}
+    'a7':list(a7_dic.values()),"a8":list(a8_dic.values()),'a9':list(a9_dic.values()),'a10':list(a10_dic.values()),'a11':list(a11_dic.values()),'a12':list(a12_dic.values()),'a13':list(a13_dic.values()),'a14':list(a14_dic.values()),
+    'a15':list(a15_dic.values()),'a16':list(a16_dic.values()),'a17':list(a17_dic.values()),'a18':list(a18_dic.values())}
 # Create your views here.
 def home(request):
     if request.user.is_authenticated:
@@ -90,6 +106,7 @@ def ViewConsolidatedFeedback(request):
         q1_11         = question_list[:11]
         q12           = question_list[11]
         amnety_ques = question_list[12:16]
+        other_ques  = question_list[16:18]
         feedbacks = FeedBack.objects.filter(course_id=course_id)
         if feedbacks.exists:
             name_of_course = " "+feedbacks[0].course_id.course_id
@@ -103,9 +120,21 @@ def ViewConsolidatedFeedback(request):
             qna = dict.fromkeys(q1_11)
             for index,key in enumerate(qna):
                 qna[key]=feedback_con[index]
+            
+            feedback_amnety = feedback_con[12:16]
+            amnety_qna = dict.fromkeys(amnety_ques)
+            for index,key in enumerate(amnety_qna):
+                amnety_qna[key]=feedback_amnety[index]
+
+            feedback_others = feedback_con[16:18]
+            others_qna = dict.fromkeys(other_ques)
+            for index,key in enumerate(others_qna):
+                others_qna[key]=feedback_others[index]
+
+            print(others_qna)
             return render(request,'feedbackConsolidated copy.html',{"name_of_course":name_of_course,
-            "name_of_faculty":name_of_faculty,'Fac_qna':qna,'q12':q12,'a12':feedback_con[11],"amnetyQues":amnety_ques,
-            'duration':duration,"start":start_date,"end":end_date,"timing":timing,'number':number})
+            "name_of_faculty":name_of_faculty,'Fac_qna':qna,'q12':q12,'a12':feedback_con[11],"amnetyQna":amnety_qna,
+            'others_qna':others_qna,'duration':duration,"start":start_date,"end":end_date,"timing":timing,'number':number})
         else:
             return redirect('employee-home')
     else:
@@ -116,7 +145,6 @@ def RegisterBulkStudents(request):
     if request.method=='POST':
         excl = request.FILES["excel_file"]
         wb = openpyxl.load_workbook(excl)
-        sheets = wb.sheetnames
         worksheet = wb["Sheet1"]
         excel_data=[]
         for row in worksheet.iter_rows():

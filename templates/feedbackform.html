@@ -36,7 +36,7 @@
                                 :- Please provide your Valuable Feedback
                             </div>
                             <div class="card-body card-block">
-                                <form action="{% url 'submitfeedback' %}" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                <form action="{% url 'submitfeedback' pk %}" method="post" enctype="multipart/form-data" class="form-horizontal">
                                     {% csrf_token %}
                                     {% for element in form %}
                                     {% if element.label == 'Comments' %}

@@ -9,18 +9,18 @@
 </head>
 <body>
     <br>
-    <table cellpadding = "0" cellspacing = "0" style="width: 1024px; height: 825px; border-color: rgb(53, 139, 50); margin-left: auto; margin-right: auto; background-color: rgba(189, 252, 186, 0.411);" border="3">
+    <table cellpadding = "0" cellspacing = "0" style="width: 1050px; height: 825px; border-color: rgb(53, 139, 50); margin-left: auto; margin-right: auto; background-color: rgba(240, 255, 240, 0.5);" border="3">
         <tbody>
             <tr style="height: 81px;">
                 <th style="width: 175px; height: 80px;">
-                <img src="{% static 'img/logo.jpg' %}" style="width: 80px; height: 80px;">
+                <img src="{% static 'img/logo_feed.png' %}" style="width: 80px; height: 92.096px;">
                 </th>
                 <th style="width: 350x; height: 80px;" colspan="10">
                     <h1>Central Tool Room and Training Center</h1>
                     <h2>Infocity Square, Patia, Bhubaneswar</h2>
                 </th>
                 <th style="width: 175px; height: 80px;">
-                    <img src="{% static 'img/logomsme.jpg' %}" style="width: 100px; height: 80px;">
+                    <img src="{% static 'img/logo_msme.png' %}" style="width: 80px; height: 80px;">
                 </th>
             </tr>
             <tr style="height: 23px;">
@@ -115,14 +115,14 @@
                 <td style="width: 77.3438px; height: 23px; text-align: center; vertical-align: middle;" colspan="2">Good</td>
                 <td style="width: 168.438px; height: 23px; text-align: center; vertical-align: middle;" colspan="3">Very Good</td>
             </tr>
-            {% for q in amnetyQues %}
+            {% for q,a in amnetyQna.items %}
             <tr style="height: 23px;">
                 <td style="width: 103.75px; height: 23px; text-align: center; vertical-align: middle;">{{forloop.counter}}.</td>
-                <td style="width: 137.719px; height: 23px; text-align: left; vertical-align: middle;">{{q}}</td>
-                <td style="width: 86.8281px; height: 23px; text-align: left; vertical-align: middle;" colspan="2">&nbsp;</td>
-                <td style="width: 126.922px; height: 23px; text-align: left; vertical-align: middle;" colspan="3">&nbsp;</td>
-                <td style="width: 77.3438px; height: 23px; text-align: left; vertical-align: middle;" colspan="2">&nbsp;</td>
-                <td style="width: 168.438px; height: 23px; text-align: left; vertical-align: middle;" colspan="3">&nbsp;</td>
+                <td style="width: 137.719px; height: 23px; text-align: center; vertical-align: middle;">{{q}}</td>
+                <td style="width: 86.8281px; height: 23px; text-align: center; vertical-align: middle;" colspan="2">{{a.0}}</td>
+                <td style="width: 126.922px; height: 23px; text-align: center; vertical-align: middle;" colspan="3">{{a.1}}</td>
+                <td style="width: 77.3438px; height: 23px; text-align: center; vertical-align: middle;" colspan="2">{{a.2}}</td>
+                <td style="width: 168.438px; height: 23px; text-align: center; vertical-align: middle;" colspan="3">{{a.3}}</td>
             </tr>
             {% endfor %}
             <!-- <tr style="height: 23px;">
@@ -160,21 +160,30 @@
                 <td style="width: 168.438px; height: 23px; text-align: center; vertical-align: middle;" colspan="3">Too Long</td>
             </tr>
             <tr style="height: 23px;">
-                <td style="width: 132.422px; height: 23px; text-align: center; vertical-align: middle;" colspan="3">&nbsp;</td>
-                <td style="width: 158.672px; height: 23px; text-align: center; vertical-align: middle;" colspan="4">&nbsp;</td>
-                <td style="width: 168.438px; height: 23px; text-align: center; vertical-align: middle;" colspan="3">&nbsp;</td>
+                {% for key,val in others_qna.items %}
+                {% if  key == "Whether Course Duration is" %}
+                <td style="width: 132.422px; height: 23px; text-align: center; vertical-align: middle;" colspan="3">{{val.0}}</td>
+                <td style="width: 158.672px; height: 23px; text-align: center; vertical-align: middle;" colspan="4">{{val.1}}</td>
+                <td style="width: 168.438px; height: 23px; text-align: center; vertical-align: middle;" colspan="3">{{val.2}}</td>
+                {% endif %}
+                {% endfor %}
             </tr>
+            
             <tr style="height: 23px;">
                 <td style="width: 103.75px; height: 33px; text-align: center; vertical-align: middle;" rowspan="2">2.</td>
                 <td style="width: 137.719px; height: 33px; text-align: center; vertical-align: middle;" rowspan="2">Course To be recommended</td>
-                <td style="width: 132.422px; height: 23px; text-align: center; vertical-align: middle;" colspan="3">&nbsp;</td>
-                <td style="width: 158.672px; height: 23px; text-align: center; vertical-align: middle;" colspan="4">&nbsp;</td>
+                <td style="width: 132.422px; height: 23px; text-align: center; vertical-align: middle;" colspan="3">Yes</td>
+                <td style="width: 158.672px; height: 23px; text-align: center; vertical-align: middle;" colspan="4">No</td>
                 <td style="width: 168.438px; height: 23px; text-align: center; vertical-align: middle;" colspan="3">&nbsp;</td>
             </tr>
             <tr style="height: 10px;">
-                <td style="width: 132.422px; height: 10px; text-align: center; vertical-align: middle;" colspan="3">&nbsp;</td>
-                <td style="width: 158.672px; height: 10px; text-align: center; vertical-align: middle;" colspan="4">&nbsp;</td>
+                {% for key,val in others_qna.items %}
+                {% if not key == "Whether Course Duration is" %}
+                <td style="width: 132.422px; height: 10px; text-align: center; vertical-align: middle;" colspan="3">{{val.0}}</td>
+                <td style="width: 158.672px; height: 10px; text-align: center; vertical-align: middle;" colspan="4">{{val.1}}</td>
                 <td style="width: 168.438px; height: 10px; text-align: center; vertical-align: middle;" colspan="3">&nbsp;</td>
+                {% endif %}
+                {% endfor %}
             </tr>
             <tr style="height: 10px;">
                 <td style="width: 405.547px; height: 10px; text-align: center; vertical-align: middle;" colspan="5">Rating of Faculty</td>

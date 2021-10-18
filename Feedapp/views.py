@@ -18,7 +18,7 @@ def Login(request):
                 if user.is_staff:
                     return redirect('employee-home')
                 else:
-                    return redirect('submitfeedback')
+                    return redirect('trainee-home')
             else:
                 return redirect('login')
         else:
@@ -28,14 +28,14 @@ def Login(request):
         if request.user.is_staff:
             return redirect('employee-home')
         else:
-             return redirect('submitfeedback')
+             return redirect('trainee-home')
 
 def Logout(request):
     if request.user.is_authenticated:
         logout(request)
     return redirect('login')
 
-def getFeedback(request):
+def getFeedback(request,pk):
     if request.user.is_authenticated:
         if request.method=='POST':
             form = FeedBackForm(request.POST)
@@ -48,21 +48,22 @@ def getFeedback(request):
                 except FeedBack.DoesNotExist:
                     form.save()
                     messages.success(request, 'Thanks for providing your valuable feedback!')
-                return redirect('submitfeedback')
+                return redirect('submitfeedback',pk)
             else:
                 messages.error(request, 'An Error occured while submitting the form')
-                return redirect('submitfeedback')
-        if not request.user.is_staff:
-            coursetaken = CourseTaken.objects.filter(user=request.user,course='PGDTD-30 AIML')[0]
-            try:
-                name = request.user.first_name+' '+request.user.last_name
-            except:
-                name = request.user.username
-            
-            form = FeedBackForm(initial={'user':request.user,'course_id':coursetaken.course})
-            
-            return render(request,'feedbackform.html',{'name':name,'form':form,'course_id':coursetaken.course})
-        
+                return redirect('submitfeedback',pk)
         else:
-            return redirect('employee-home')
+            if not request.user.is_staff:
+                print(pk)
+                coursetaken = CourseTaken.objects.filter(user=request.user,course=pk)[0]
+                name = request.user.first_name+' '+request.user.last_name
+                if name=='':
+                    name = request.user.username
+                
+                form = FeedBackForm(initial={'user':request.user,'course_id':coursetaken.course})
+                
+                return render(request,'feedbackform.html',{'name':name,'form':form,'course_id':coursetaken.course,'pk':pk})
+            
+            else:
+                return redirect('employee-home')
 
