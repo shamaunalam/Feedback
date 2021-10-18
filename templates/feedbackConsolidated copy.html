@@ -27,17 +27,17 @@
                 <td style="text-align: center; vertical-align: middle; width: 701px; height: 23px;" colspan="12"><h2>Learning Service Validation Report</h2></td>
             </tr>
             <tr style="height: 24px;">
-                <td style="width: 241.469px; height: 24px;" colspan="2"><b>Name of course</b>:{{ name_of_course }}</td>
-                <td style="width: 245.375px; height: 24px;" colspan="6"><b>Timing</b>: {{timing}}</td>
-                <td style="width: 214.156px; height: 24px;" colspan="4"><b>Venue</b>: Lab-25</td>
+                <td style="width: 241.469px; height: 24px;" colspan="2">&nbsp;<b>Name of course</b>:{{ name_of_course }}</td>
+                <td style="width: 245.375px; height: 24px;" colspan="6">&nbsp;<b>Timing</b>: {{timing}}</td>
+                <td style="width: 214.156px; height: 24px;" colspan="4">&nbsp;<b>Venue</b>: Lab-25</td>
             </tr>
             <tr style="height: 23px;">
-                <td style="width: 701px; height: 23px;" colspan="12"><b>Name of Faculty/Faculties</b>:&nbsp;{{name_of_faculty}}</td>
+                <td style="width: 701px; height: 23px;" colspan="12">&nbsp;<b>Name of Faculty/Faculties</b>:&nbsp;{{name_of_faculty}}</td>
             </tr>
             <tr style="height: 23px;">
-                <td style="width: 296.75px; height: 23px;" colspan="3"><b>Course Duration</b> {{duration}}</td>
-                <td style="width: 108.797px; height: 23px;" colspan="3"><b>From</b> :{{start}} <b><br>To</b>:{{end}}</td>
-                <td style="width: 295.453px; height: 23px;" colspan="6"><b>No. of Trainees</b>: {{number}}</td>
+                <td style="width: 296.75px; height: 23px;" colspan="3">&nbsp;<b>Course Duration</b> {{duration}}</td>
+                <td style="width: 108.797px; height: 23px;" colspan="3">&nbsp;<b>From</b> :{{start}} <b><br>&nbsp;To</b>:{{end}}</td>
+                <td style="width: 295.453px; height: 23px;" colspan="6">&nbsp;<b>No. of Trainees</b>: {{number}}</td>
             </tr>
             <tr style="height: 23px;">
                 <td style="width: 701px; height: 23px; text-align: center; vertical-align: middle;" colspan="12"><b>General</b></td>
@@ -79,8 +79,9 @@
             </tr>
             {% endfor %}
             <tr style="height: 23px;">
-                <td style="width: 564.266px; height: 23px;" colspan="10"><b>Total Faculty Score</b>:</td>
-                <td style="width: 136.734px; height: 23px;" colspan="2">_______</td>
+                <td style="width: 564.266px; height: 23px;" colspan="10"><b>&nbsp;Net Faculty Score</b>:</td>
+                <td style="width: 100px; height: 23px; text-align: center;" colspan="1">{{total_faculty_score}}</td>
+                <td style="width: 100px; height: 23px; text-align: center;" colspan="1">{{avg_faculty_score}}</td>
             </tr>
             <tr style="height: 23px;">
                 <td style="width: 103.75px; height: 23px; text-align: center;">12</td>
@@ -96,13 +97,10 @@
                 <td style="width: 100px; height: 23px; text-align: center;">{{ a12.8 }}</td>
                 <td style="width: 100px; height: 23px; text-align: center;">{{ a12.9 }}</td>
             </tr>
-            <!-- <tr style="height: 23px;">
-                <td style="width: 241.469px; height: 23px;" colspan="2">&nbsp;</td>
-                <td style="width: 459.531px; height: 23px;" colspan="10">&nbsp;</td>
-            </tr> -->
             <tr style="height: 23px;">
-                <td style="width: 241.469px; height: 23px;" colspan="2">&nbsp;</td>
-                <td style="width: 459.531px; height: 23px;" colspan="10">&nbsp;</td>
+                <td style="width: 564.266px; height: 23px;" colspan="10">&nbsp;<b>Net Score</b>:</td>
+                <td style="width: 100px; height: 23px; text-align: center;" colspan="1">{{total_overall_score}}</td>
+                <td style="width: 100px; height: 23px; text-align: center;" colspan="1">{{avg_overall_score}}</td>
             </tr>
             <tr style="height: 23px;">
                 <td style="width: 701px; height: 23px; text-align: center; vertical-align: middle;" colspan="12"><b>Ameneties</b></td>
@@ -172,29 +170,27 @@
             <tr style="height: 23px;">
                 <td style="width: 103.75px; height: 33px; text-align: center; vertical-align: middle;" rowspan="2">2.</td>
                 <td style="width: 137.719px; height: 33px; text-align: center; vertical-align: middle;" rowspan="2">Course To be recommended</td>
-                <td style="width: 132.422px; height: 23px; text-align: center; vertical-align: middle;" colspan="3">Yes</td>
-                <td style="width: 158.672px; height: 23px; text-align: center; vertical-align: middle;" colspan="4">No</td>
-                <td style="width: 168.438px; height: 23px; text-align: center; vertical-align: middle;" colspan="3">&nbsp;</td>
+                <td style="width: 132.422px; height: 23px; text-align: center; vertical-align: middle;" colspan="5">Yes</td>
+                <td style="width: 158.672px; height: 23px; text-align: center; vertical-align: middle;" colspan="5">No</td>
             </tr>
             <tr style="height: 10px;">
                 {% for key,val in others_qna.items %}
                 {% if not key == "Whether Course Duration is" %}
-                <td style="width: 132.422px; height: 10px; text-align: center; vertical-align: middle;" colspan="3">{{val.0}}</td>
-                <td style="width: 158.672px; height: 10px; text-align: center; vertical-align: middle;" colspan="4">{{val.1}}</td>
-                <td style="width: 168.438px; height: 10px; text-align: center; vertical-align: middle;" colspan="3">&nbsp;</td>
+                <td style="width: 132.422px; height: 10px; text-align: center; vertical-align: middle;" colspan="5">{{val.0}}</td>
+                <td style="width: 158.672px; height: 10px; text-align: center; vertical-align: middle;" colspan="5">{{val.1}}</td>
                 {% endif %}
                 {% endfor %}
             </tr>
             <tr style="height: 10px;">
-                <td style="width: 405.547px; height: 10px; text-align: center; vertical-align: middle;" colspan="5">Rating of Faculty</td>
+                <td style="width: 405.547px; height: 10px; text-align: left; vertical-align: middle;" colspan="5">&nbsp;<b>Rating of Faculty</b></td>
                 <td style="width: 295.453px; height: 10px; text-align: center; vertical-align: middle;" colspan="7">&nbsp;</td>
             </tr>
             <tr style="height: 10px;">
-                <td style="width: 405.547px; height: 10px; text-align: center; vertical-align: middle;" colspan="5">Rating of Fecilitation Center</td>
+                <td style="width: 405.547px; height: 10px; text-align: left; vertical-align: middle;" colspan="5">&nbsp;<b>Rating of Fecilitation Center</b></td>
                 <td style="width: 295.453px; height: 10px; text-align: center; vertical-align: middle;" colspan="7">&nbsp;</td>
             </tr>
             <tr style="height: 10px;">
-                <td style="width: 405.547px; height: 10px; text-align: center; vertical-align: middle;" colspan="5">Overall Ratings</td>
+                <td style="width: 405.547px; height: 10px; text-align: left; vertical-align: middle;" colspan="5">&nbsp;<b>Overall Ratings</b></td>
                 <td style="width: 295.453px; height: 10px; text-align: center; vertical-align: middle;" colspan="7">&nbsp;</td>
             </tr>
         </tbody>

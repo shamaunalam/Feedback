@@ -16,6 +16,7 @@ class Course(models.Model):
     end_date   = models.DateField(blank=True)
     start_time = models.TimeField(blank=True)
     end_time   = models.TimeField(blank=True)
+    venue      = models.CharField(max_length=10,blank=True)
     def __str__(self):
         return self.course_id
 
