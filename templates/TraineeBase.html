@@ -33,6 +33,8 @@
 
     <!-- Main CSS-->
     <link href="{% static 'css/theme.css' %}" rel="stylesheet" media="all">
+    <link rel="stylesheet" href="{% static 'jquery-bar-rating/dist/themes/bars-square.css' %}">
+    <link rel="stylesheet" href="{% static 'jquery-bar-rating/dist/themes/bars-movie.css' %}">
     {% block style %}{% endblock %}
 </head>
 
@@ -191,6 +193,12 @@
 
     <!-- Main JS-->
     <script src="{% static 'js/main.js' %}"></script>
+
+    <!--jquery-rating-js-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="{% static 'jquery-bar-rating/dist/jquery.barrating.min.js' %}"></script>
+
     {% block script %}
     {% endblock %}
 </body>

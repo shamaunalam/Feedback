@@ -112,46 +112,13 @@
 
 
 </style>
+
+
 {% endblock %}
 
 {% block content %}
 
             <div class="main-content">
-                <div class="container">
-                    <div class="row">
-                      <div class="col-xs-12">
-                            <p class="page-header">1 is good, 10 is bad (i.e., "How much pain are you in right now?")</p>
-                            <div class="chart-scale">
-                                <button class="btn btn-scale btn-scale-asc-1">1</button>
-                                <button class="btn btn-scale btn-scale-asc-2">2</button>
-                                <button class="btn btn-scale btn-scale-asc-3">3</button>
-                                <button class="btn btn-scale btn-scale-asc-4">4</button>
-                                <button class="btn btn-scale btn-scale-asc-5">5</button>
-                                <button class="btn btn-scale btn-scale-asc-6">6</button>
-                                <button class="btn btn-scale btn-scale-asc-7">7</button>
-                                <button class="btn btn-scale btn-scale-asc-8">8</button>
-                                <button class="btn btn-scale btn-scale-asc-9">9</button>
-                                <button class="btn btn-scale btn-scale-asc-10">10</button>
-                                <hr/>
-                            </div>
-                            <p class="page-header">1 is bad, 10 is good (i.e., "How happy are you feeling today?")</p>
-                            <div class="chart-scale">
-                                <button class="btn btn-scale btn-scale-desc-1">1</button>
-                                <button class="btn btn-scale btn-scale-desc-2">2</button>
-                                <button class="btn btn-scale btn-scale-desc-3">3</button>
-                                <button class="btn btn-scale btn-scale-desc-4">4</button>
-                                <button class="btn btn-scale btn-scale-desc-5">5</button>
-                                <button class="btn btn-scale btn-scale-desc-6">6</button>
-                                <button class="btn btn-scale btn-scale-desc-7">7</button>
-                                <button class="btn btn-scale btn-scale-desc-8">8</button>
-                                <button class="btn btn-scale btn-scale-desc-9">9</button>
-                                <button class="btn btn-scale btn-scale-desc-10">10</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
                 <div class="row">
                     <div class="col-lg-6">
                     {% if messages %}
@@ -197,6 +164,7 @@
                                         <div class="col-lg-6">
                                             {{element}}
                                         </div>
+                                        
                                     </div>
                                     <hr>
                                     {% elif not element.is_hidden %}
@@ -204,19 +172,23 @@
                                         <div class="col-12 col-md-9">
                                             <label for="{{ element.id_for_label }}" class=" form-control-label">{{ element.label }}</label>
                                         </div>
-                                        <div class="col col-md-3">
+                                        <div class="col-12 col-md-9">
                                             {{ element }}
                                         </div>
+                                        
                                     </div>
+                                    <br>
                                     <hr>
+                                    
                                     {% else %}
                                     <div class="row form-group">
                                         <div class="col-12 col-md-9">
                                             <label for="{{ element.id_for_label }}" class=" form-control-label">{{ element.label }}</label>
                                         </div>
-                                        <div class="col col-md-3">
+                                        <div class="col-12 col-md-9">
                                             {{element}}{{name}}
                                         </div>
+                                        
                                     </div>
                                     <hr>
                                     {% endif %}
@@ -232,4 +204,120 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+            $(function() {
+                $('#id_A1').barrating({
+                theme: 'bars-square',
+                showValues: true,
+                showSelectedRating: false,
+                });
+            });
+            $(function() {
+                $('#id_A2').barrating({
+                theme: 'bars-square',
+                showValues: true,
+                showSelectedRating: false,
+                });
+            });
+            $(function() {
+                $('#id_A3').barrating({
+                theme: 'bars-square',
+                showValues: true,
+                showSelectedRating: false,
+                });
+            });
+            $(function() {
+                $('#id_A4').barrating({
+                theme: 'bars-square',
+                showValues: true,
+                showSelectedRating: false,
+                });
+            });
+            $(function() {
+                $('#id_A5').barrating({
+                theme: 'bars-square',
+                showValues: true,
+                showSelectedRating: false,
+                });
+            });
+            $(function() {
+                $('#id_A6').barrating({
+                theme: 'bars-square',
+                showValues: true,
+                showSelectedRating: false,
+                });
+            });
+            $(function() {
+                $('#id_A7').barrating({
+                theme: 'bars-square',
+                showValues: true,
+                showSelectedRating: false,
+                });
+            });
+            $(function() {
+                $('#id_A8').barrating({
+                theme: 'bars-square',
+                showValues: true,
+                showSelectedRating: false,
+                });
+            });
+            $(function() {
+                $('#id_A9').barrating({
+                theme: 'bars-square',
+                showValues: true,
+                showSelectedRating: false,
+                });
+            });
+            $(function() {
+                $('#id_A10').barrating({
+                theme: 'bars-square',
+                showValues: true,
+                showSelectedRating: false,
+                });
+            });
+            $(function() {
+                $('#id_A11').barrating({
+                theme: 'bars-square',
+                showValues: true,
+                showSelectedRating: false,
+                });
+            });
+            $(function() {
+                $('#id_A12').barrating({
+                theme: 'bars-square',
+                showValues: true,
+                showSelectedRating: false,
+                });
+            });
+            $(function() {
+                $('#id_A13').barrating({
+                theme: 'bars-movie',
+                showValues: false,
+                showSelectedRating: true,
+                });
+            });
+            $(function() {
+                $('#id_A14').barrating({
+                theme: 'bars-movie',
+                showValues: false,
+                showSelectedRating: true,
+                });
+            });
+            $(function() {
+                $('#id_A15').barrating({
+                theme: 'bars-movie',
+                showValues: false,
+                showSelectedRating: true,
+                });
+            });
+            $(function() {
+                $('#id_A16').barrating({
+                theme: 'bars-movie',
+                showValues: false,
+                showSelectedRating: true,
+                });
+            });
+</script>
 {% endblock %}

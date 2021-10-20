@@ -57,13 +57,14 @@ def getFeedback(request,pk):
                 print(pk)
                 coursetaken = CourseTaken.objects.filter(user=request.user,course=pk)[0]
                 name = request.user.first_name+' '+request.user.last_name
-                if name=='':
+                if name==' ':
                     name = request.user.username
-                
                 form = FeedBackForm(initial={'user':request.user,'course_id':coursetaken.course})
                 
                 return render(request,'feedbackform.html',{'name':name,'form':form,'course_id':coursetaken.course,'pk':pk})
             
             else:
                 return redirect('employee-home')
+    else:
+        return redirect('login')
 
