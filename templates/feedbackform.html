@@ -1,119 +1,6 @@
 {% extends 'TraineeBase.html' %}
 {% block title %}Give Feedback{% endblock %}
 {% block style %}
-<style>
-.btn-scale {
-    min-width: 44px;
-    width: 6%;
-    text-align: center;
-    font-weight: bold;
-    color: black;
-    font-family: 'Lato', sans-serif;
-  }
-  
-  .btn-scale-asc-1, .btn-scale-desc-10 {
-    background-color: #33FF00;
-  }
-  
-  .btn-scale-asc-1:hover,
-  .btn-scale-desc-10:hover {
-    background-color: #2CDE00;
-  }
-  
-  .btn-scale-asc-2,
-  .btn-scale-desc-9{
-    background-color: #66FF00;
-  }
-  
-  .btn-scale-asc-2:hover,
-  .btn-scale-desc-9:hover{
-    background-color: #59DE00;
-  }
-  
-  .btn-scale-asc-3,
-  .btn-scale-desc-8 {
-    background-color: #99FF00;
-  }
-  
-  .btn-scale-asc-3:hover,
-  .btn-scale-desc-8:hover {
-    background-color: #85DE00;
-  }
-  
-  .btn-scale-asc-4,
-  .btn-scale-desc-7 {
-    background-color: #CCFF00;
-  }
-  
-  .btn-scale-asc-4:hover,
-  .btn-scale-desc-7:hover {
-    background-color: #B1DE00;
-  }
-  
-  .btn-scale-asc-5,
-  .btn-scale-desc-6 {
-    background-color: #FFFF00;
-  }
-  
-  .btn-scale-asc-5:hover,
-  .btn-scale-desc-6:hover {
-    background-color: #DEDE00;
-  }
-  
-  .btn-scale-asc-6,
-  .btn-scale-desc-5 {
-    background-color: #FFCC00;
-  }
-  
-  .btn-scale-asc-6:hover,
-  .btn-scale-desc-5:hover {
-    background-color: #DEB100;
-  }
-  
-  .btn-scale-asc-7,
-  .btn-scale-desc-4 {
-    background-color: #FF9900;
-  }
-  
-  .btn-scale-asc-7:hover,
-  .btn-scale-desc-4:hover {
-    background-color: #DE8500;
-  }
-  
-  .btn-scale-asc-8,
-  .btn-scale-desc-3 {
-    background-color: #FF6600;
-  }
-  
-  .btn-scale-asc-8:hover,
-  .btn-scale-desc-3:hover {
-    background-color: #DE5900;
-  }
-  
-  .btn-scale-asc-9,
-  .btn-scale-desc-2 {
-    background-color: #FF3300;
-  }
-  
-  .btn-scale-asc-9:hover,
-  .btn-scale-desc-2:hover {
-    background-color: #DE2C00;
-  }
-  
-  .btn-scale-asc-10,
-  .btn-scale-desc-1 {
-    background-color: #FF0000;
-  }
-  
-  .btn-scale-asc-10:hover,
-  .btn-scale-desc-1:hover {
-    background-color: #DE0000;
-  }
-
-
-</style>
-
-
 {% endblock %}
 
 {% block content %}
@@ -169,15 +56,15 @@
                                     <hr>
                                     {% elif not element.is_hidden and element.label != 'Course id' and element.label != 'How do you rate Safety?' and element.label != 'How do you rate Training Admin Response?' and element.label != 'How do you rate Cafeteria?' and element.label != 'How do you rate Sanitation?' %}
                                     <div class="row form-group">
-                                        <div class="col-12 col-md-9">
+                                        <div class="col-lg-6">
                                             <label for="{{ element.id_for_label }}" class=" form-control-label"><strong>{{ element.label }}</strong></label>
                                         </div>
-                                        <div class="col-12 col-md-9">
+                                        <div class="col-lg-6">
                                             {{ element }}
                                         </div>
-                                        <div class="col-12 col-md-9">
+                                        <!-- <div class="col-12 col-md-9">
                                             &nbsp;
-                                        </div> 
+                                        </div>  -->
                                         <div class="col-12 col-md-9">
                                             <span>2-4 Poor&nbsp;&nbsp;|&nbsp;&nbsp;5-6 Average&nbsp;&nbsp;|&nbsp;&nbsp;7-8 Good&nbsp;&nbsp;|&nbsp;&nbsp;9-10 Excellent</span>
                                         </div> 
@@ -186,13 +73,13 @@
                                     <hr>
                                     {% elif element.label == 'How do you rate Safety?' or element.label == 'How do you rate Training Admin Response?' or element.label == 'How do you rate Cafeteria?' or element.label == 'How do you rate Sanitation?' %}
                                     <div class="row form-group">
-                                        <div class="col-12 col-md-9">
+                                        <div class="col-lg-6">
                                             <label for="{{ element.id_for_label }}" class=" form-control-label"><strong>{{ element.label }}</strong></label>
                                         </div>
-                                        <div class="col-12 col-md-9">
+                                        <!-- <div class="col-12 col-md-9">
                                             &nbsp;
-                                        </div>
-                                        <div class="col-12 col-md-9">
+                                        </div> -->
+                                        <div class="col-lg-6">
                                             {{ element }}
                                         </div>
                                         <div class="col-12 col-md-9">
