@@ -6,11 +6,42 @@ from django.utils.translation import gettext_lazy as _
 # from Trainee.models import TraineeProfile
 # Create your models here.
 
+class Department(models.Model):
+
+    class DepartmentChoices(models.TextChoices):
+        D1 = "PGDTD",_("Post Graduate Diploma in Tool Design")
+        D2 = "MCC",_("Master Certificate Course In CAD/CAM")
+        D3 = "PDTDM",_("Post Diploma In Tool and Die Making")
+        D4 = "PDCC",_("Post Diploma in CAD/CAM")
+        D5 = "CNC",_("Computer Numeric Control")
+        D6 = "ITI",_("ITI")
+        D7 = "DDUGKY",_("DDUGKY")
+        D8 = "CIVIL",_("CIVIL")
+        D9 = "DTDM",_("Diploma In Tool and Die Making")
+        D10= "DIM",_("Diploma in Mechatronics")
+        D11= "MCCAPC",_("MCCAPC")
+        D12="ADMA",_("ADMA")
+        D13="IoT",_("Internet Of Things")
+        D14="PE",_("Power Electronics")
+        D15="VLSI",_("Very Large Scale Integration")
+        D16="OT",_("Others")
+
+    department_name = models.TextField(max_length=20,choices=DepartmentChoices.choices,primary_key=True)
+    incharge = models.ForeignKey(User,on_delete=models.DO_NOTHING)
+    section = models.TextField(max_length=10,choices=(("CAD","CAD/CAM"),
+    ("EB","Electronics Block"),("CV","Civil")),default="CAD")
+
+    def __str__(self):
+        return self.department_name
+        
+
+
+
 class Course(models.Model):
 
     course_id = models.CharField(max_length=50,primary_key=True)
     subject   = models.CharField(max_length=50,default='Others')
-    course_name = models.CharField(max_length=50,blank=False)
+    course_details = models.CharField(max_length=500,blank=False)
     faculty    = models.ForeignKey("Employee.EmployeeProfile", verbose_name=_("Faculty"), on_delete=models.CASCADE)
     start_date = models.DateField(blank=True)
     end_date   = models.DateField(blank=True)
