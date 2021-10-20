@@ -97,7 +97,11 @@ def home(request):
     if request.user.is_authenticated:
         if request.user.is_staff:
             name = request.user.username
-    return render(request,'EmployeeDash.html',{'name':name})
+            return render(request,'EmployeeDash.html',{'name':name})
+        else:
+            return render(request,'restricted_access.html')
+    else:
+        return redirect('login')
 
 def ViewConsolidatedFeedback(request):
     if request.method=="POST":
@@ -186,7 +190,7 @@ def ViewConsolidatedFeedback(request):
 
 def RegisterBulkStudents(request):
     """function to register bulk students"""
-    if request.method=='POST':
+    if request.user.is_staff and request.method=='POST':
         excl = request.FILES["excel_file"]
         wb = openpyxl.load_workbook(excl)
         worksheet = wb["Sheet1"]
@@ -231,5 +235,7 @@ def RegisterBulkStudents(request):
         else:
             messages.success(request,"Trainees Successfully Registered!")
         return render(request,'bulk_test.html',{"name":request.user.username,"excel_data":excel_data})   
-    else:
+    elif request.user.is_staff:
         return render(request,'bulk_test.html',{"name":request.user.username})
+    else:
+        return render(request,"restricted_access.html")
