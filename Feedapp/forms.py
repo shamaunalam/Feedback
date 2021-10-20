@@ -10,6 +10,7 @@ class FeedBackForm(ModelForm):
        super(FeedBackForm, self).__init__(*args, **kwargs)
        self.fields['user'].widget.attrs['readonly'] = True
        self.fields['course_id'].widget.attrs['readonly']=True
+       self.fields['A1'].empty_label = 0
 
     class Meta:
         questions = FeedBackQuestions.objects.all()[0]
