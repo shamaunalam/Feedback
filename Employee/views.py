@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import redirect, render,HttpResponse
 from Feedapp.models import FeedBackQuestions,Course,FeedBack
 from Trainee.models import CourseTaken
@@ -93,104 +94,104 @@ def create_consolidated(feedbacks):
     'a7':list(a7_dic.values()),"a8":list(a8_dic.values()),'a9':list(a9_dic.values()),'a10':list(a10_dic.values()),'a11':list(a11_dic.values()),'a12':list(a12_dic.values()),'a13':list(a13_dic.values()),'a14':list(a14_dic.values()),
     'a15':list(a15_dic.values()),'a16':list(a16_dic.values()),'a17':list(a17_dic.values()),'a18':list(a18_dic.values()),'total_faculty_score':total_faculty_score}
 # Create your views here.
+
+@login_required(login_url='login')
+@user_passes_test(lambda user:user.is_staff,login_url='oops')
 def home(request):
-    if request.user.is_authenticated:
-        if request.user.is_staff:
-            name = request.user.username
-            return render(request,'EmployeeDash.html',{'name':name})
-        else:
-            return render(request,'restricted_access.html')
-    else:
-        return redirect('login')
+        name = request.user.username
+        courses = Course.objects.all()
+        return render(request,'EmployeeDash.html',{'name':name,'courses':courses})
+  
 
-def ViewConsolidatedFeedback(request):
-    if request.method=="POST":
-
-        course_id = request.POST['course']
-        faculty_questions =  FeedBackQuestions.objects.values_list("Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8","Q9","Q10","Q11","Q12","Q13","Q14","Q15","Q16","Q17","Q18")
-        question_list = faculty_questions[0]
-        q1_11         = question_list[:11]
-        q12           = question_list[11]
-        amnety_ques = question_list[12:16]
-        other_ques  = question_list[16:18]
-        feedbacks = FeedBack.objects.filter(course_id=course_id)
-        if feedbacks.exists:
-            name_of_course = " "+feedbacks[0].course_id.course_id
-            name_of_faculty = feedbacks[0].course_id.faculty.user.first_name+" "+feedbacks[0].course_id.faculty.user.last_name
-            start_date = feedbacks[0].course_id.start_date
-            end_date = feedbacks[0].course_id.end_date
-            timing = feedbacks[0].course_id.start_time.strftime("%I:%M %p")+' ~ '+feedbacks[0].course_id.end_time.strftime("%I:%M %p")
-            duration = (start_date - end_date).days
-            venue = feedbacks[0].course_id.venue
-            number   = len(feedbacks)
-            feedback_con = create_consolidated(feedbacks)
-            total_faculty_score = feedback_con['total_faculty_score']
-            avg_faculty_score = round((total_faculty_score/(number*110))*10,2)
-            feedback_con = list(feedback_con.values())
-            qna = dict.fromkeys(q1_11)
-            for index,key in enumerate(qna):
-                qna[key]=feedback_con[index]
+@login_required(login_url='login')
+@user_passes_test(lambda user:user.is_staff,login_url='oops')
+def ViewConsolidatedFeedback(request,pk):
+    course_id = pk
+    faculty_questions =  FeedBackQuestions.objects.values_list("Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8","Q9","Q10","Q11","Q12","Q13","Q14","Q15","Q16","Q17","Q18")
+    question_list = faculty_questions[0]
+    q1_11         = question_list[:11]
+    q12           = question_list[11]
+    amnety_ques = question_list[12:16]
+    other_ques  = question_list[16:18]
+    feedbacks = FeedBack.objects.filter(course_id=course_id)
+    if feedbacks.exists:
+        name_of_course = " "+feedbacks[0].course_id.course_id
+        name_of_faculty = feedbacks[0].course_id.faculty.user.first_name+" "+feedbacks[0].course_id.faculty.user.last_name
+        start_date = feedbacks[0].course_id.start_date
+        end_date = feedbacks[0].course_id.end_date
+        timing = feedbacks[0].course_id.start_time.strftime("%I:%M %p")+' ~ '+feedbacks[0].course_id.end_time.strftime("%I:%M %p")
+        duration = (start_date - end_date).days
+        venue = feedbacks[0].course_id.venue
+        number   = len(feedbacks)
+        feedback_con = create_consolidated(feedbacks)
+        total_faculty_score = feedback_con['total_faculty_score']
+        avg_faculty_score = round((total_faculty_score/(number*110))*10,2)
+        feedback_con = list(feedback_con.values())
+        qna = dict.fromkeys(q1_11)
+        for index,key in enumerate(qna):
+            qna[key]=feedback_con[index]
             
-            feedback_amnety = feedback_con[12:16]
-            amnety_qna = dict.fromkeys(amnety_ques)
-            for index,key in enumerate(amnety_qna):
-                amnety_qna[key]=feedback_amnety[index]
+        feedback_amnety = feedback_con[12:16]
+        amnety_qna = dict.fromkeys(amnety_ques)
+        for index,key in enumerate(amnety_qna):
+            amnety_qna[key]=feedback_amnety[index]
 
-            feedback_others = feedback_con[16:18]
-            others_qna = dict.fromkeys(other_ques)
-            for index,key in enumerate(others_qna):
-                others_qna[key]=feedback_others[index]
+        feedback_others = feedback_con[16:18]
+        others_qna = dict.fromkeys(other_ques)
+        for index,key in enumerate(others_qna):
+            others_qna[key]=feedback_others[index]
 
-            total_overall_score = total_faculty_score+feedback_con[11][8]
-            avg_overall_score   = round((total_overall_score/(number*120))*10,2)
+        total_overall_score = total_faculty_score+feedback_con[11][8]
+        avg_overall_score   = round((total_overall_score/(number*120))*10,2)
 
-            n_stars_faculty = [1 for i in range(int(str(round(avg_faculty_score/2,1)).split('.')[0]))]
-            if int(str(round(avg_faculty_score/2,1)).split('.')[1])>5:
-                n_stars_faculty.append(1)
-            elif int(str(round(avg_faculty_score/2,1)).split('.')[1])<=5 and int(str(round(avg_faculty_score/2,1)).split('.')[1])>0:
-                n_stars_faculty.append(0.5)
-            else:
-                n_stars_faculty.append(0)
+        n_stars_faculty = [1 for i in range(int(str(round(avg_faculty_score/2,1)).split('.')[0]))]
+        if int(str(round(avg_faculty_score/2,1)).split('.')[1])>5:
+            n_stars_faculty.append(1)
+        elif int(str(round(avg_faculty_score/2,1)).split('.')[1])<=5 and int(str(round(avg_faculty_score/2,1)).split('.')[1])>0:
+            n_stars_faculty.append(0.5)
+        else:
+            n_stars_faculty.append(0)
 
-            if len(n_stars_faculty)>5:
-                n_stars_faculty.pop()
+        if len(n_stars_faculty)>5:
+            n_stars_faculty.pop()
 
-            n_stars_center = [1 for i in range(int(str(round(feedback_con[11][9]/2,1)).split('.')[0]))]
-            if int(str(round(feedback_con[11][9]/2,1)).split('.')[1])>5:
-                n_stars_center.append(1)
-            elif int(str(round(feedback_con[11][9]/2,1)).split('.')[1])<=5 and int(str(round(feedback_con[11][9]/2,1)).split('.')[1])>0:
-                n_stars_center.append(0.5)
-            else:
-                n_stars_center.append(0)
+        n_stars_center = [1 for i in range(int(str(round(feedback_con[11][9]/2,1)).split('.')[0]))]
+        if int(str(round(feedback_con[11][9]/2,1)).split('.')[1])>5:
+            n_stars_center.append(1)
+        elif int(str(round(feedback_con[11][9]/2,1)).split('.')[1])<=5 and int(str(round(feedback_con[11][9]/2,1)).split('.')[1])>0:
+            n_stars_center.append(0.5)
+        else:
+            n_stars_center.append(0)
 
-            if len(n_stars_center)>5:
-                n_stars_center.pop()
+        if len(n_stars_center)>5:
+            n_stars_center.pop()
 
-            n_stars_overall = [1 for i in range(int(str(round(avg_overall_score/2,1)).split('.')[0]))]
-            if int(str(round(avg_overall_score/2,1)).split('.')[1])>5:
-                n_stars_overall.append(1)
-            elif int(str(round(avg_overall_score/2,1)).split('.')[1])<=5 and int(str(round(avg_overall_score/2,1)).split('.')[1])>0:
-                n_stars_overall.append(0.5)
-            else:
-                n_stars_overall.append(0)
+        n_stars_overall = [1 for i in range(int(str(round(avg_overall_score/2,1)).split('.')[0]))]
+        if int(str(round(avg_overall_score/2,1)).split('.')[1])>5:
+            n_stars_overall.append(1)
+        elif int(str(round(avg_overall_score/2,1)).split('.')[1])<=5 and int(str(round(avg_overall_score/2,1)).split('.')[1])>0:
+            n_stars_overall.append(0.5)
+        else:
+            n_stars_overall.append(0)
 
             if len(n_stars_overall)>5:
                 n_stars_overall.pop()
             
-            return render(request,'feedbackConsolidated copy.html',{"name_of_course":name_of_course,
-            "name_of_faculty":name_of_faculty,'Fac_qna':qna,'q12':q12,'a12':feedback_con[11],"amnetyQna":amnety_qna,
-            'others_qna':others_qna,'duration':duration,"start":start_date,"end":end_date,"timing":timing,'number':number,
-            'total_faculty_score':total_faculty_score,'avg_faculty_score':avg_faculty_score,'total_overall_score':total_overall_score,
-            'avg_overall_score':avg_overall_score,'venue':venue,'n_stars_faculty':n_stars_faculty,'n_stars_center':n_stars_center,
-            'n_stars_overall':n_stars_overall})
-        else:
-            return redirect('employee-home')
+        return render(request,'feedbackConsolidated copy.html',{"name_of_course":name_of_course,
+        "name_of_faculty":name_of_faculty,'Fac_qna':qna,'q12':q12,'a12':feedback_con[11],"amnetyQna":amnety_qna,
+        'others_qna':others_qna,'duration':duration,"start":start_date,"end":end_date,"timing":timing,'number':number,
+        'total_faculty_score':total_faculty_score,'avg_faculty_score':avg_faculty_score,'total_overall_score':total_overall_score,
+        'avg_overall_score':avg_overall_score,'venue':venue,'n_stars_faculty':n_stars_faculty,'n_stars_center':n_stars_center,
+        'n_stars_overall':n_stars_overall})
     else:
+        messages.error(request,'Feedback does not exist')
         return redirect('employee-home')
 
+@login_required(login_url='login')
+@user_passes_test(lambda user:user.is_staff,login_url='oops')
 def RegisterBulkStudents(request):
     """function to register bulk students"""
-    if request.user.is_staff and request.method=='POST':
+    if request.method=='POST':
         excl = request.FILES["excel_file"]
         wb = openpyxl.load_workbook(excl)
         worksheet = wb["Sheet1"]
@@ -234,8 +235,7 @@ def RegisterBulkStudents(request):
             messages.error(request,'{} users already registered for course'.format(duplicates))
         else:
             messages.success(request,"Trainees Successfully Registered!")
-        return render(request,'bulk_test.html',{"name":request.user.username,"excel_data":excel_data})   
-    elif request.user.is_staff:
-        return render(request,'bulk_test.html',{"name":request.user.username})
+        return render(request,'bulk_test.html',{"name":request.user.username,"excel_data":excel_data})
+        
     else:
-        return render(request,"restricted_access.html")
+        return render(request,'bulk_test.html',{"name":request.user.username})

@@ -128,13 +128,7 @@
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
                         <div class="header-wrap">
-                            <form class="form-header" action="{% url 'view-consolidated' %}" method="POST">
-                                {% csrf_token %}
-                                <input class="au-input au-input--xl" type="text" name="course" placeholder="Get Feedback Report By Course"/>
-                                <button class="au-btn--submit" type="submit">
-                                    <i class="zmdi zmdi-search"></i>
-                                </button>
-                            </form>
+                            <span>&nbsp;</span>
                             <div class="header-button">
                                 
                                 <div class="account-wrap">
@@ -143,7 +137,7 @@
                                             <img src="images/icon/avatar-01.jpg" alt="John Doe" />
                                         </div> -->
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#">{{name}}</a>
+                                            <button class="js-acc-btn" href="#">{{name}}</button>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             

@@ -91,7 +91,7 @@
                                         <span class="au-checkmark"></span>
                                     </label>
                                 </td> -->
-                                <td>{{course.course.course_id}}</td>
+                                <td><a class="btn btn-primary" href="{% url 'submitfeedback' pk=course.course.course_id %}">{{course.course.course_id}}</a></td>
                                 <td>
                                     <!-- <span class="block-email">lori@example.com</span> -->
                                     {{course.course.subject}}
