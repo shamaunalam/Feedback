@@ -1,3 +1,4 @@
+from Employee.models import EmployeeProfile
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import redirect, render,HttpResponse
@@ -8,6 +9,13 @@ import openpyxl
 
 
 # util functions
+
+def feedbackToStars(feedback):
+    total_score = sum((feedback.A1,feedback.A2,feedback.A3,feedback.A4,feedback.A5,feedback.A6,feedback.A7,feedback.A8,feedback.A9,feedback.A10,feedback.A11))
+    n_stars = (total_score//10)//2
+    print(n_stars)
+    return n_stars
+
 
 def create_consolidated(feedbacks):
     a1_counts = [[n.A1 for n in feedbacks].count(i) for i in range(2,11)]
@@ -239,3 +247,29 @@ def RegisterBulkStudents(request):
         
     else:
         return render(request,'bulk_test.html',{"name":request.user.username})
+
+@login_required(login_url='login')
+@user_passes_test(lambda user:user.is_staff,login_url='oops')
+def employeeProfile(request,pk):
+    try:
+        stars = list()
+        emp = User.objects.get(username=pk)
+        pro = EmployeeProfile.objects.get(user=emp)
+        courses_taken = Course.objects.filter(faculty=pro)
+        
+        for course in courses_taken:
+            feedbacks = FeedBack.objects.filter(course_id=course)
+            for feedback in feedbacks:
+                stars.append(feedbackToStars(feedback))
+
+        count_stars = [stars.count(5),stars.count(4),stars.count(3),stars.count(2),stars.count(1),stars.count(0)]
+        total_stars = sum(count_stars)
+        avg         = round(sum(stars)/total_stars,1)
+        print(count_stars)
+        print(total_stars)
+        star_percent = [int((i/total_stars)*100) for i in count_stars]
+        context = {"count_stars":count_stars,'total_stars':total_stars,'star_percent':star_percent,'avg':avg,'pro':pro}
+        return render(request,'EmployeeProfile.html',context)
+    except User.DoesNotExist or FeedBack.DoesNotExist:
+        messages.add(request,"feedback for user {} does not exist".format(pk))
+        return redirect('employee-home')
