@@ -1,3 +1,4 @@
+import os
 from django.db import models
 from django.contrib.auth.models import User
 from Feedapp.models import Course,Department
@@ -21,7 +22,7 @@ class EmployeeProfile(models.Model):
     department = models.ForeignKey(Department,to_field="department_name",on_delete=models.DO_NOTHING,default='OT')
     desg = models.TextField(_("Designation"),max_length=10,choices=DesignationChoices.choices,blank=True)
     qual = models.TextField(_("Qualification"),max_length=20,blank=True)
-    photo = models.ImageField(upload_to='Employee_Photos',default='Employee_Photos/default_photo.png')
+    photo = models.ImageField(upload_to='Employee_Photos',default='default_avatar.png')
     phone = models.IntegerField(null=True,blank=True)
 
     def __str__(self):

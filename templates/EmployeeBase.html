@@ -35,6 +35,16 @@
     <link href="{% static 'css/theme.css' %}" rel="stylesheet" media="all">
 
     {% block style %}{% endblock %}
+    <style>
+                .user {
+        display: inline-block;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+
+        object-fit: cover;
+        }
+    </style>
 
 </head>
 
@@ -46,10 +56,7 @@
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
                         <a class="logo" href="index.html">
-                            <!-- <img src="images/icon/logo.png" alt="CoolAdmin" /> -->
-                            <h2>
-                                CTTC Feedback
-                            </h2>
+                            <img src="{% static 'img/logo_feed.png' %}" style="width: 50px; height: 50px;" alt="CoolAdmin" />
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
@@ -89,16 +96,54 @@
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
                 <a href="#">
-                    <!-- <img src="images/icon/logo.png" alt="Cool Admin" /> -->
-                    <h2>
-                        CTTC Feedback
-                    </h2>
+                    <img src="{% static 'img/logo_feed.png' %}" class= "align-self-left mr-3" style="width: 60px; height: 60px; float:left;" alt="Cool Admin" />
+                    <!-- <h5 class="card-title mb-3">Central Training Feedback System, CTTC-BBSR</h5> -->
+                    &nbsp;&nbsp;
+                    <img src="{% static 'img/logo_msme.png' %}" class= "align-self-right mr-3" style="width: 85px; height: 60px; float:right;" alt="Cool Admin" />
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        
+
+                            <!-- <div class="card">
+                                <div class="card-header">
+                                    <strong class="card-title mb-3">Profile Card</strong>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mx-auto d-block">
+                                        <img class="rounded-circle mx-auto d-block" src="images/icon/avatar-01.jpg" alt="Card image cap">
+                                        <h5 class="text-sm-center mt-2 mb-1">Steven Lee</h5>
+                                        <div class="location text-sm-center">
+                                            <i class="fa fa-map-marker"></i> California, United States</div>
+                                    </div>
+                                    <hr>
+                                    <div class="card-text text-sm-center">
+                                        <a href="#">
+                                            <i class="fa fa-facebook pr-1"></i>
+                                        </a>
+                                        <a href="#">
+                                            <i class="fa fa-twitter pr-1"></i>
+                                        </a>
+                                        <a href="#">
+                                            <i class="fa fa-linkedin pr-1"></i>
+                                        </a>
+                                        <a href="#">
+                                            <i class="fa fa-pinterest pr-1"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div> -->
+
+
+                        <div class="image">
+                            {% if userpro.photo %}
+                            <img class="user mx-auto d-block" src="{{userpro.photo.url}}" alt="" />
+                            {% else %}
+                            <img  src="{% static 'img/default_avatar.png' %}" alt=""/>
+                            {% endif %}
+                        </div>
+                        <h5 class="text-sm-center">{{username}}</h5>
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-copy"></i>Actions</a>
@@ -137,7 +182,7 @@
                                             <img src="images/icon/avatar-01.jpg" alt="John Doe" />
                                         </div> -->
                                         <div class="content">
-                                            <button class="js-acc-btn" href="#">{{name}}</button>
+                                            <button class="js-acc-btn" href="#">{{userpro.user.username}}</button>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             
