@@ -114,7 +114,7 @@ def ViewConsolidatedFeedback(request,pk):
     amnety_ques = question_list[12:16]
     other_ques  = question_list[16:18]
     feedbacks = FeedBack.objects.filter(course_id=course_id)
-    if feedbacks.exists:
+    if feedbacks.exists():
         name_of_course = " "+feedbacks[0].course_id.course_id
         name_of_faculty = feedbacks[0].course_id.faculty.user.first_name+" "+feedbacks[0].course_id.faculty.user.last_name
         start_date = feedbacks[0].course_id.start_date
