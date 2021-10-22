@@ -264,9 +264,10 @@ def employeeProfile(request,pk):
 
         count_stars = [stars.count(5),stars.count(4),stars.count(3),stars.count(2),stars.count(1),stars.count(0)]
         total_stars = sum(count_stars)
-        avg         = round(sum(stars)/total_stars,1)
-        print(count_stars)
-        print(total_stars)
+        if total_stars!=0:
+            avg = round(sum(stars)/total_stars,1)
+        else:
+            avg = 0
         star_percent = [int((i/total_stars)*100) for i in count_stars]
         context = {"count_stars":count_stars,'total_stars':total_stars,'star_percent':star_percent,'avg':avg,'pro':pro}
         return render(request,'EmployeeProfile.html',context)
