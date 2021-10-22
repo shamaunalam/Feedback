@@ -104,11 +104,9 @@
                                     <div class="card-footer">
                                     
                                                 <span class="rateHeader">User Rating</span>
+                                                {% for i in flag %}
                                                 <span class="fa fa-star rated"></span>
-                                                <span class="fa fa-star rated"></span>
-                                                <span class="fa fa-star rated"></span>
-                                                <span class="fa fa-star rated"></span>
-                                                <span class="fa fa-star"></span>
+                                                {% endfor %}
                                                 <p>{{avg}} average based on {{total_stars}} feedbacks</p>
                                                 <div class="row">
                                                 <div class="data">

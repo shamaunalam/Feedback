@@ -270,7 +270,7 @@ def employeeProfile(request,pk):
         else:
             avg = 0
             star_percent = [0 for i in count_stars]
-        context = {"count_stars":count_stars,'total_stars':total_stars,'star_percent':star_percent,'avg':avg,'pro':pro}
+        context = {"count_stars":count_stars,'total_stars':total_stars,'star_percent':star_percent,'avg':avg,'flag':[1 for i in range(int(avg))],'pro':pro}
         return render(request,'EmployeeProfile.html',context)
     except User.DoesNotExist or FeedBack.DoesNotExist:
         messages.add(request,"feedback for user {} does not exist".format(pk))
