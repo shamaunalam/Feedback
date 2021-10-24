@@ -13,9 +13,13 @@
       font-size: 25px;
       color: grey;
    }
-   .rated {
-      color: rgb(255, 0, 0);
-      border: 2px solid yellow;
+   .ratedg {
+      color: rgb(115, 255, 0);
+      border: none;
+   }
+   .ratedo {
+      color: rgb(255, 174, 0);
+      border: none;
    }
    .data {
       float: left;
@@ -136,9 +140,15 @@
                                     <div class="card-footer">
                                     
                                                 <span class="rateHeader">User Rating</span>
+                                                {% if avg >= 4 %}
                                                 {% for i in flag %}
-                                                <span class="fa fa-star rated"></span>
+                                                <span class="fa fa-star ratedg"></span>
                                                 {% endfor %}
+                                                {% else %}
+                                                {% for i in flag %}
+                                                <span class="fa fa-star ratedo"></span>
+                                                {% endfor %}
+                                                {% endif %}
                                                 <p>{{avg}} average based on {{total_stars}} feedbacks</p>
                                                 <div class="row">
                                                 <div class="data">

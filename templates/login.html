@@ -42,6 +42,34 @@
             <div class="container">
                 <div class="login-wrap">
                     <div class="login-content">
+
+                        <div class="row">
+                            
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if message.tags == 'error' %}
+                                        <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+                                                <span class="badge badge-pill badge-danger">Alert!!</span>
+                                                {{ message }}
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                        </div>
+                                    
+                                    {% else %}
+                                        <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+                                            <span class="badge badge-pill badge-success">Alert!!</span>
+                                            {{ message }}
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            
+                          </div>
+
                         <div class="login-logo">
                             <a href="#">
                                 <!-- <img src="{% static 'images/icon/logo.png' %}" alt="CoolAdmin"> -->

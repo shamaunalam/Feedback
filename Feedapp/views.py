@@ -25,6 +25,7 @@ def Login(request):
                 else:
                     return redirect('trainee-home')
             else:
+                messages.error(request,"Incorrect username or password")
                 return redirect('login')
         else:
 

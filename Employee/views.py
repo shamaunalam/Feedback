@@ -2,7 +2,7 @@ from Employee.models import EmployeeProfile
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import redirect, render,HttpResponse
-from Feedapp.models import FeedBackQuestions,Course,FeedBack
+from Feedapp.models import FeedBackQuestions,Course,FeedBack,Department
 from Trainee.models import CourseTaken
 from django.contrib.auth.models import User
 import openpyxl
@@ -106,9 +106,21 @@ def create_consolidated(feedbacks):
 @user_passes_test(lambda user:user.is_staff,login_url='oops')
 def home(request):
         name = request.user.username.title()
-        courses = Course.objects.order_by("-start_date")
         userpro = EmployeeProfile.objects.get(user=request.user)
-        return render(request,'EmployeeDash.html',{'name':name,'courses':courses,'userpro':userpro})
+        if userpro.desg in [EmployeeProfile.DesignationChoices.D1,EmployeeProfile.DesignationChoices.D2,EmployeeProfile.DesignationChoices.D3]:
+            print(userpro.desg)
+            all_courses = Course.objects.order_by("-start_date")
+        elif userpro.department.incharge == request.user:
+            # if user is incharge fetch all feedbacks of that department
+            facpros = EmployeeProfile.objects.filter(department=userpro.department)
+            all_courses = EmployeeProfile.objects.none()
+            for fac in facpros:
+                courses = Course.objects.filter(faculty=fac)
+                all_courses = all_courses.union(courses)
+            all_courses = all_courses.order_by('-start_date')
+        else:
+            all_courses = Course.objects.filter(faculty=userpro)
+        return render(request,'EmployeeDash.html',{'name':name,'courses':all_courses,'userpro':userpro})
   
 
 @login_required(login_url='login')
@@ -283,7 +295,7 @@ def eprofile(request,pk):
            return redirect('employee-home')
    else:
        userpro = EmployeeProfile.objects.get(user=request.user)
-       if userpro.desg in [EmployeeProfile.DesignationChoices.D1,EmployeeProfile.DesignationChoices.D2,EmployeeProfile.DesignationChoices.D3]:
+       if (userpro.desg in [EmployeeProfile.DesignationChoices.D1,EmployeeProfile.DesignationChoices.D2,EmployeeProfile.DesignationChoices.D3]) or userpro.department.incharge==request.user:
             try:
                 pro = EmployeeProfile.objects.get(user=User.objects.get(username=pk))
                 courses_taken = Course.objects.filter(faculty=pro)
