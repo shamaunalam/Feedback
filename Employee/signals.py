@@ -13,4 +13,6 @@ def create_employee_profile(sender,instance,created,**kwargs):
                     EmployeeProfile.objects.create(user=instance)
                     instance.employeeprofile.save()
             except IntegrityError:
-                instance.employeeprofile.save()
+                pass
+    else:
+        pass

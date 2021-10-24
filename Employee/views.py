@@ -13,7 +13,6 @@ import openpyxl
 def feedbackToStars(feedback):
     total_score = sum((feedback.A1,feedback.A2,feedback.A3,feedback.A4,feedback.A5,feedback.A6,feedback.A7,feedback.A8,feedback.A9,feedback.A10,feedback.A11))
     n_stars = (total_score//10)//2
-    print(n_stars)
     return n_stars
 
 
@@ -107,7 +106,7 @@ def create_consolidated(feedbacks):
 @user_passes_test(lambda user:user.is_staff,login_url='oops')
 def home(request):
         name = request.user.username.title()
-        courses = Course.objects.all()
+        courses = Course.objects.order_by("-start_date")
         userpro = EmployeeProfile.objects.get(user=request.user)
         return render(request,'EmployeeDash.html',{'name':name,'courses':courses,'userpro':userpro})
   
@@ -252,48 +251,82 @@ def RegisterBulkStudents(request):
 
 @login_required(login_url='login')
 @user_passes_test(lambda user:user.is_staff,login_url='oops')
-def employeeFeedbackReport(request,pk):
-    try:
-        stars = list()
-        emp = User.objects.get(username=pk)
-        if request.user.username==pk:
-            pro = EmployeeProfile.objects.get(user=emp)
-            #userpro = EmployeeProfile.objects.get(user=request.user)
-            userpro = pro
-            courses_taken = Course.objects.filter(faculty=pro)
-        else:
-            pro = EmployeeProfile.objects.get(user=emp)
-            userpro = EmployeeProfile.objects.get(user=request.user)
-            courses_taken = Course.objects.filter(faculty=pro)
-        
-        for course in courses_taken:
-            feedbacks = FeedBack.objects.filter(course_id=course)
-            for feedback in feedbacks:
-                stars.append(feedbackToStars(feedback))
+def eprofile(request,pk):
+   if request.user.username==pk:
+       try:
+           userpro=EmployeeProfile.objects.get(user=request.user)
+           pro = userpro
+           courses_taken = Course.objects.filter(faculty=userpro)
+           if courses_taken.filter(faculty=userpro).exists():
+               stars=list()
+               for course in courses_taken:
+                   feedbacks = FeedBack.objects.filter(course_id=course)
+                   for feedback in feedbacks:
+                       stars.append(feedbackToStars(feedback))
+               count_stars = [stars.count(5),stars.count(4),stars.count(3),stars.count(2),stars.count(1),stars.count(0)]
+               total_stars = sum(count_stars)
+               if total_stars!=0:
+                    avg = round(sum(stars)/total_stars,1)
+                    star_percent = [int((i/total_stars)*100) for i in count_stars]
+               else:
+                    avg = 0
+                    star_percent = [0 for i in count_stars]
+               context = {"count_stars":count_stars,'total_stars':total_stars,'star_percent':star_percent,
+               'avg':avg,'flag':[1 for i in range(int(avg))],'pro':pro,'username':request.user.username.title(),'userpro':userpro}
+               return render(request,'EmployeeProfile.html',context)
+           else:
+               context = {"count_stars":[0,0,0,0,0],'total_stars':0,'star_percent':[0,0,0,0,0],
+               'avg':0,'flag':[1 for i in range(int(0))],'pro':pro,'username':request.user.username.title(),'userpro':userpro}
+               return render(request,'EmployeeProfile.html',context)
+       except EmployeeProfile.DoesNotExist:
+           messages.error(request,'profile does not exist')
+           return redirect('employee-home')
+   else:
+       userpro = EmployeeProfile.objects.get(user=request.user)
+       if userpro.desg in [EmployeeProfile.DesignationChoices.D1,EmployeeProfile.DesignationChoices.D2,EmployeeProfile.DesignationChoices.D3]:
+            try:
+                pro = EmployeeProfile.objects.get(user=User.objects.get(username=pk))
+                courses_taken = Course.objects.filter(faculty=pro)
+                if courses_taken.filter(faculty=pro).exists():
+                    stars=list()
+                    for course in courses_taken:
+                        feedbacks = FeedBack.objects.filter(course_id=course)
+                        for feedback in feedbacks:
+                            stars.append(feedbackToStars(feedback))
+                    count_stars = [stars.count(5),stars.count(4),stars.count(3),stars.count(2),stars.count(1),stars.count(0)]
+                    total_stars = sum(count_stars)
+                    if total_stars!=0:
+                            avg = round(sum(stars)/total_stars,1)
+                            star_percent = [int((i/total_stars)*100) for i in count_stars]
+                    else:
+                            avg = 0
+                            star_percent = [0 for i in count_stars]
+                    context = {"count_stars":count_stars,'total_stars':total_stars,'star_percent':star_percent,
+                    'avg':avg,'flag':[1 for i in range(int(avg))],'pro':pro,'username':request.user.username.title(),'userpro':userpro}
+                    return render(request,'EmployeeProfile.html',context)
+                else:
+                    context = {"count_stars":[0,0,0,0,0],'total_stars':0,'star_percent':[0,0,0,0,0],
+                    'avg':0,'flag':[1 for i in range(int(0))],'pro':pro,'username':request.user.username.title(),'userpro':userpro}
+                    return render(request,'EmployeeProfile.html',context)
+            except User.DoesNotExist:
+                messages.error(request,'profile for {} does not exist'.format(pk))
+                return redirect('employee-home')
+       else:
+           messages.error(request,'Access Denied')
+           return redirect('employee-home')
 
-        count_stars = [stars.count(5),stars.count(4),stars.count(3),stars.count(2),stars.count(1),stars.count(0)]
-        total_stars = sum(count_stars)
-        if total_stars!=0:
-            avg = round(sum(stars)/total_stars,1)
-            star_percent = [int((i/total_stars)*100) for i in count_stars]
-        else:
-            avg = 0
-            star_percent = [0 for i in count_stars]
-        context = {"count_stars":count_stars,'total_stars':total_stars,'star_percent':star_percent,'avg':avg,'flag':[1 for i in range(int(avg))],'pro':pro,
-        'username':request.user.username.title(),'userpro':userpro}
-        return render(request,'EmployeeProfile.html',context)
-        
-    except (User.DoesNotExist,FeedBack.DoesNotExist,) as e:
-        messages.error(request,"feedback for user {} does not exist".format(pk))
+@login_required(login_url='login')
+@user_passes_test(lambda user:user.is_staff,login_url='oops')
+def search(request):
+    if request.method=='POST':
+        pk = request.POST['pk']
         try:
-            if request.user.username==pk:
-                pro = EmployeeProfile.objects.get(user=request.user)
-                #userpro = EmployeeProfile.objects.get(user=request.user)
-                userpro = pro
-            else:
-                emp = User.objects.get(username=pk)
-                pro = EmployeeProfile.objects.get(user=emp)
-                userpro = EmployeeProfile.objects.get(user=request.user)
-        except EmployeeProfile.DoesNotExist:
-            messages.error(request,"User Profile Does not exist")
+            emp= EmployeeProfile.objects.get(user=User.objects.get(username=pk))
+            empId = emp.user.username
+            return redirect('employee-profile',empId)
+        except User.DoesNotExist:
+            messages.error(request,'user does not exist')
             return redirect('employee-home')
+    else:
+        messages.error(request,'Nothing to search')
+        redirect('employee-home')

@@ -36,10 +36,18 @@
 
     {% block style %}{% endblock %}
     <style>
-                .user {
+        .user {
         display: inline-block;
         width: 150px;
         height: 150px;
+        border-radius: 50%;
+
+        object-fit: cover;
+        }
+        .user_box {
+        display: inline-block;
+        width: 45px;
+        height: 45px;
         border-radius: 50%;
 
         object-fit: cover;
@@ -55,7 +63,7 @@
             <div class="header-mobile__bar">
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
-                        <a class="logo" href="index.html">
+                        <a class="logo" href="{% url 'employee-home' %}">
                             <img src="{% static 'img/logo_feed.png' %}" style="width: 50px; height: 50px;" alt="CoolAdmin" />
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
@@ -95,7 +103,7 @@
         <!-- MENU SIDEBAR-->
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
-                <a href="#">
+                <a href="{% url 'employee-home' %}">
                     <img src="{% static 'img/logo_feed.png' %}" class= "align-self-left mr-3" style="width: 60px; height: 60px; float:left;" alt="Cool Admin" />
                     <!-- <h5 class="card-title mb-3">Central Training Feedback System, CTTC-BBSR</h5> -->
                     &nbsp;&nbsp;
@@ -173,19 +181,42 @@
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
                         <div class="header-wrap">
-                            <span>&nbsp;</span>
+                            <form class="form-header" action="{% url 'search' %}" method="POST">
+                                {% csrf_token %}
+                                <input class="au-input au-input--xl" type="text" name="pk" placeholder="Search for Employee" />
+                                <button class="au-btn--submit" type="submit">
+                                    <i class="zmdi zmdi-search"></i>
+                                </button>
+                            </form>
                             <div class="header-button">
-                                
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
-                                        <!-- <div class="image">
-                                            <img src="images/icon/avatar-01.jpg" alt="John Doe" />
-                                        </div> -->
+                                        <div class="image">
+                                            {% if userpro.photo %}
+                                            <img class="user_box mx-auto d-block" src="{{userpro.photo.url}}" alt="" />
+                                            {% else %}
+                                            <img class="user_box mx-auto d-block" src="{% static 'img/default_avatar.png' %}" alt=""/>
+                                            {% endif %}
+                                        </div>
                                         <div class="content">
-                                            <button class="js-acc-btn" href="#">{{userpro.user.username}}</button>
+                                            <a class="js-acc-btn" href="#">Welcome ! {{userpro.user.username}}</a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
-                                            
+                                            <div class="account-dropdown__body">
+                                                <div class="account-dropdown__item">
+                                                     <a href="{% url 'employee-profile' pk=userpro.user.username %}">
+                                                        <i class="zmdi zmdi-account"></i>Your Profile</a>
+                                                </div>
+                                                <!--
+                                                <div class="account-dropdown__item">
+                                                    <a href="#">
+                                                        <i class="zmdi zmdi-settings"></i>Setting</a>
+                                                </div>
+                                                <div class="account-dropdown__item">
+                                                    <a href="#">
+                                                        <i class="zmdi zmdi-money-box"></i>Billing</a>
+                                                </div> -->
+                                            </div>
                                             <div class="account-dropdown__footer">
                                                 <a href="{% url 'logout' %}">
                                                     <i class="zmdi zmdi-power"></i>Logout</a>

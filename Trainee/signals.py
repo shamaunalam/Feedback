@@ -13,4 +13,6 @@ def create_trainee_profile(sender,instance,created,**kwargs):
                     TraineeProfile.objects.create(user=instance)
                     instance.traineeprofile.save()
             except IntegrityError:
-                instance.traineeprofile.save()
+                pass
+    else:
+        pass
