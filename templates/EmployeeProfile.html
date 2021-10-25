@@ -117,25 +117,28 @@
                                         <strong class="card-title mb-3">Faculty Profile</strong>
                                     </div>
                                     <div class="card-body">
-                                        <div class="mx-auto d-block">
+                                       <div class="mx-auto d-block">
                                             <img class="user mx-auto d-block" src="{{pro.photo.url}}" alt="Card image cap">
                                             <h5 class="text-sm-center mt-2 mb-1">{{pro.user.first_name}}&nbsp;{{pro.user.last_name}}</h5>
-                                        </div>
-                                        <hr>
-                                        <div class="card-text text-sm-center">
-                                            <a href="#">
-                                                <i class="fa fa-facebook pr-1"></i>
-                                            </a>
-                                            <a href="#">
-                                                <i class="fa fa-twitter pr-1"></i>
-                                            </a>
-                                            <a href="#">
-                                                <i class="fa fa-linkedin pr-1"></i>
-                                            </a>
-                                            <a href="#">
-                                                <i class="fa fa-pinterest pr-1"></i>
-                                            </a>
-                                        </div>
+                                       </div>
+                                       <hr>
+                                       <div class="card-text">
+                                            
+                                                Designation :- {{pro.get_desg_display}}
+                                            
+                                       </div>
+                                       <div class="card-text">
+                                          
+                                               Department :- {{pro.department}}
+                                          
+                                       </div>
+                                       <div class="card-text">
+                                          
+                                                Phone :- {{pro.phone}}
+                                          
+                                       </div>
+
+
                                     </div>
                                     <div class="card-footer">
                                     
