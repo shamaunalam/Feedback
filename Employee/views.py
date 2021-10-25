@@ -298,28 +298,32 @@ def eprofile(request,pk):
        if (userpro.desg in [EmployeeProfile.DesignationChoices.D1,EmployeeProfile.DesignationChoices.D2,EmployeeProfile.DesignationChoices.D3]) or userpro.department.incharge==request.user:
             try:
                 pro = EmployeeProfile.objects.get(user=User.objects.get(username=pk))
-                courses_taken = Course.objects.filter(faculty=pro)
-                if courses_taken.filter(faculty=pro).exists():
-                    stars=list()
-                    for course in courses_taken:
-                        feedbacks = FeedBack.objects.filter(course_id=course)
-                        for feedback in feedbacks:
-                            stars.append(feedbackToStars(feedback))
-                    count_stars = [stars.count(5),stars.count(4),stars.count(3),stars.count(2),stars.count(1),stars.count(0)]
-                    total_stars = sum(count_stars)
-                    if total_stars!=0:
-                            avg = round(sum(stars)/total_stars,1)
-                            star_percent = [int((i/total_stars)*100) for i in count_stars]
+                if pro.department.incharge==request.user:
+                    courses_taken = Course.objects.filter(faculty=pro)
+                    if courses_taken.filter(faculty=pro).exists():
+                        stars=list()
+                        for course in courses_taken:
+                            feedbacks = FeedBack.objects.filter(course_id=course)
+                            for feedback in feedbacks:
+                                stars.append(feedbackToStars(feedback))
+                        count_stars = [stars.count(5),stars.count(4),stars.count(3),stars.count(2),stars.count(1),stars.count(0)]
+                        total_stars = sum(count_stars)
+                        if total_stars!=0:
+                                avg = round(sum(stars)/total_stars,1)
+                                star_percent = [int((i/total_stars)*100) for i in count_stars]
+                        else:
+                                avg = 0
+                                star_percent = [0 for i in count_stars]
+                        context = {"count_stars":count_stars,'total_stars':total_stars,'star_percent':star_percent,
+                        'avg':avg,'flag':[1 for i in range(int(avg))],'pro':pro,'username':request.user.username.title(),'userpro':userpro}
+                        return render(request,'EmployeeProfile.html',context)
                     else:
-                            avg = 0
-                            star_percent = [0 for i in count_stars]
-                    context = {"count_stars":count_stars,'total_stars':total_stars,'star_percent':star_percent,
-                    'avg':avg,'flag':[1 for i in range(int(avg))],'pro':pro,'username':request.user.username.title(),'userpro':userpro}
-                    return render(request,'EmployeeProfile.html',context)
+                        context = {"count_stars":[0,0,0,0,0],'total_stars':0,'star_percent':[0,0,0,0,0],
+                        'avg':0,'flag':[1 for i in range(int(0))],'pro':pro,'username':request.user.username.title(),'userpro':userpro}
+                        return render(request,'EmployeeProfile.html',context)
                 else:
-                    context = {"count_stars":[0,0,0,0,0],'total_stars':0,'star_percent':[0,0,0,0,0],
-                    'avg':0,'flag':[1 for i in range(int(0))],'pro':pro,'username':request.user.username.title(),'userpro':userpro}
-                    return render(request,'EmployeeProfile.html',context)
+                    messages.error(request,'Access Denied')
+                    return redirect('employee-home')                   
             except User.DoesNotExist:
                 messages.error(request,'profile for {} does not exist'.format(pk))
                 return redirect('employee-home')
