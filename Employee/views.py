@@ -211,6 +211,7 @@ def ViewConsolidatedFeedback(request,pk):
 @user_passes_test(lambda user:user.is_staff,login_url='oops')
 def RegisterBulkStudents(request):
     """function to register bulk students"""
+    userpro = EmployeeProfile.objects.get(user=request.user)
     if request.method=='POST':
         excl = request.FILES["excel_file"]
         wb = openpyxl.load_workbook(excl)
@@ -255,10 +256,9 @@ def RegisterBulkStudents(request):
             messages.error(request,'{} users already registered for course'.format(duplicates))
         else:
             messages.success(request,"Trainees Successfully Registered!")
-        return render(request,'bulk_test.html',{"name":request.user.username,"excel_data":excel_data})
+        return render(request,'bulk_test.html',{"name":request.user.username,"excel_data":excel_data,"userpro":userpro})
         
     else:
-        userpro = EmployeeProfile.objects.get(user=request.user)
         return render(request,'bulk_test.html',{"name":request.user.username,"userpro":userpro})
 
 @login_required(login_url='login')
