@@ -298,7 +298,7 @@ def eprofile(request,pk):
        if (userpro.desg in [EmployeeProfile.DesignationChoices.D1,EmployeeProfile.DesignationChoices.D2,EmployeeProfile.DesignationChoices.D3]) or userpro.department.incharge==request.user:
             try:
                 pro = EmployeeProfile.objects.get(user=User.objects.get(username=pk))
-                if pro.department.incharge==request.user:
+                if (userpro.desg in [EmployeeProfile.DesignationChoices.D1,EmployeeProfile.DesignationChoices.D2,EmployeeProfile.DesignationChoices.D3]) or pro.department.incharge==request.user:
                     courses_taken = Course.objects.filter(faculty=pro)
                     if courses_taken.filter(faculty=pro).exists():
                         stars=list()
