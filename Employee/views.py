@@ -105,7 +105,7 @@ def create_consolidated(feedbacks):
 @login_required(login_url='login')
 @user_passes_test(lambda user:user.is_staff,login_url='oops')
 def home(request):
-        name = request.user.username.title()
+        name = request.user.first_name.title()+" "+request.user.last_name.title()
         userpro = EmployeeProfile.objects.get(user=request.user)
         if userpro.desg in [EmployeeProfile.DesignationChoices.D1,EmployeeProfile.DesignationChoices.D2,EmployeeProfile.DesignationChoices.D3]:
             print(userpro.desg)
@@ -211,6 +211,7 @@ def ViewConsolidatedFeedback(request,pk):
 @user_passes_test(lambda user:user.is_staff,login_url='oops')
 def RegisterBulkStudents(request):
     """function to register bulk students"""
+    name = request.user.first_name.title()+" "+request.user.last_name.title()
     userpro = EmployeeProfile.objects.get(user=request.user)
     if request.method=='POST':
         excl = request.FILES["excel_file"]
@@ -247,7 +248,7 @@ def RegisterBulkStudents(request):
                     course = Course.objects.get(course_id=data[1])
                 except Course.DoesNotExist:
                     messages.error(request,"{} Course Does not Exist Please ask admin to add the course!".format(data[1]))
-                    return render(request,'bulk_test.html',{"excel_data":excel_data})
+                    continue
                 finally:
                     coursetaken = CourseTaken.objects.create(user = user , course=Course.objects.get(course_id=data[1]))
                     user.save()
@@ -256,14 +257,15 @@ def RegisterBulkStudents(request):
             messages.error(request,'{} users already registered for course'.format(duplicates))
         else:
             messages.success(request,"Trainees Successfully Registered!")
-        return render(request,'bulk_test.html',{"name":request.user.username,"excel_data":excel_data,"userpro":userpro})
+        return render(request,'bulk_test.html',{"name":name,"excel_data":excel_data,"userpro":userpro})
         
     else:
-        return render(request,'bulk_test.html',{"name":request.user.username,"userpro":userpro})
+        return render(request,'bulk_test.html',{"name":name,"userpro":userpro})
 
 @login_required(login_url='login')
 @user_passes_test(lambda user:user.is_staff,login_url='oops')
 def eprofile(request,pk):
+   name = request.user.first_name.title()+" "+request.user.last_name.title()
    if request.user.username==pk:
        try:
            userpro=EmployeeProfile.objects.get(user=request.user)
@@ -288,7 +290,8 @@ def eprofile(request,pk):
                return render(request,'EmployeeProfile.html',context)
            else:
                context = {"count_stars":[0,0,0,0,0],'total_stars':0,'star_percent':[0,0,0,0,0],
-               'avg':0,'flag':[1 for i in range(int(0))],'pro':pro,'username':request.user.username.title(),'userpro':userpro}
+               'avg':0,'flag':[1 for i in range(int(0))],'pro':pro,'username':request.user.username.title(),'userpro':userpro,
+               "name":name}
                return render(request,'EmployeeProfile.html',context)
        except EmployeeProfile.DoesNotExist:
            messages.error(request,'profile does not exist')
@@ -315,11 +318,13 @@ def eprofile(request,pk):
                                 avg = 0
                                 star_percent = [0 for i in count_stars]
                         context = {"count_stars":count_stars,'total_stars':total_stars,'star_percent':star_percent,
-                        'avg':avg,'flag':[1 for i in range(int(avg))],'pro':pro,'username':request.user.username.title(),'userpro':userpro}
+                        'avg':avg,'flag':[1 for i in range(int(avg))],'pro':pro,'username':request.user.username.title(),'userpro':userpro,
+                        "name":name}
                         return render(request,'EmployeeProfile.html',context)
                     else:
                         context = {"count_stars":[0,0,0,0,0],'total_stars':0,'star_percent':[0,0,0,0,0],
-                        'avg':0,'flag':[1 for i in range(int(0))],'pro':pro,'username':request.user.username.title(),'userpro':userpro}
+                        'avg':0,'flag':[1 for i in range(int(0))],'pro':pro,'username':request.user.username.title(),'userpro':userpro,
+                        "name":name}
                         return render(request,'EmployeeProfile.html',context)
                 else:
                     messages.error(request,'Access Denied')
