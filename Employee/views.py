@@ -286,7 +286,7 @@ def eprofile(request,pk):
                     avg = 0
                     star_percent = [0 for i in count_stars]
                context = {"count_stars":count_stars,'total_stars':total_stars,'star_percent':star_percent,
-               'avg':avg,'flag':[1 for i in range(int(avg))],'pro':pro,'username':request.user.username.title(),'userpro':userpro}
+               'avg':avg,'flag':[1 for i in range(int(avg))],'pro':pro,'username':request.user.username.title(),'userpro':userpro,"name":name}
                return render(request,'EmployeeProfile.html',context)
            else:
                context = {"count_stars":[0,0,0,0,0],'total_stars':0,'star_percent':[0,0,0,0,0],
