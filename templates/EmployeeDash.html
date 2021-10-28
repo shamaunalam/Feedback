@@ -97,7 +97,7 @@
                                                     <td>{{course.start_time}}</td>
                                                     <td>
                                                         <!-- <span class="status--process">Processed</span> -->
-                                                        <a href="{% url 'employee-profile' pk=course.faculty.user.username %}">{{course.faculty.user.username}}</a>
+                                                        <a href="{% url 'employee-profile' pk=course.faculty.user.username %}">{{course.faculty.user.first_name}}&nbsp;{{course.faculty.user.last_name}}</a>
                                                     </td>
                                                     
                                                     <!-- <td>

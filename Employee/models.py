@@ -19,14 +19,14 @@ class EmployeeProfile(models.Model):
         D10= "OJ",_("On Job Trainee")
 
     user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
-    department = models.ForeignKey(Department,to_field="department_name",on_delete=models.DO_NOTHING,default='OT')
+    department = models.ForeignKey(Department,to_field="department_name",on_delete=models.DO_NOTHING,blank=True,null=True)
     desg = models.TextField(_("Designation"),max_length=10,choices=DesignationChoices.choices,blank=True)
     qual = models.TextField(_("Qualification"),max_length=20,blank=True)
     photo = models.ImageField(upload_to='Employee_Photos',default='default_avatar.png')
     phone = models.IntegerField(null=True,blank=True)
 
     def __str__(self):
-        return self.user.username+' '+'profile'
+        return self.user.first_name+' '+'profile'
 
     def __getUser__(self):
         return self.user

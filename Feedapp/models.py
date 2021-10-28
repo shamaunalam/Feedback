@@ -27,7 +27,7 @@ class Department(models.Model):
         D16="OT",_("Others")
 
     department_name = models.TextField(max_length=20,choices=DepartmentChoices.choices,primary_key=True)
-    incharge = models.ForeignKey(User,on_delete=models.DO_NOTHING)
+    incharge = models.ForeignKey(User,on_delete=models.DO_NOTHING,blank=True,null=True)
     section = models.TextField(max_length=10,choices=(("CAD","CAD/CAM"),
     ("EB","Electronics Block"),("CV","Civil")),default="CAD")
 

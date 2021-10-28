@@ -110,14 +110,17 @@ def home(request):
         if userpro.desg in [EmployeeProfile.DesignationChoices.D1,EmployeeProfile.DesignationChoices.D2,EmployeeProfile.DesignationChoices.D3]:
             print(userpro.desg)
             all_courses = Course.objects.order_by("-start_date")
-        elif userpro.department.incharge == request.user:
-            # if user is incharge fetch all feedbacks of that department
-            facpros = EmployeeProfile.objects.filter(department=userpro.department)
-            all_courses = EmployeeProfile.objects.none()
-            for fac in facpros:
-                courses = Course.objects.filter(faculty=fac)
-                all_courses = all_courses.union(courses)
-            all_courses = all_courses.order_by('-start_date')
+        elif userpro.department is not None:
+            if userpro.department.incharge == request.user:
+                # if user is incharge fetch all feedbacks of that department
+                facpros = EmployeeProfile.objects.filter(department=userpro.department)
+                all_courses = EmployeeProfile.objects.none()
+                for fac in facpros:
+                    courses = Course.objects.filter(faculty=fac)
+                    all_courses = all_courses.union(courses)
+                all_courses = all_courses.order_by('-start_date')
+            else:
+                all_courses = Course.objects.filter(faculty=userpro)
         else:
             all_courses = Course.objects.filter(faculty=userpro)
         return render(request,'EmployeeDash.html',{'name':name,'courses':all_courses,'userpro':userpro})
