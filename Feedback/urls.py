@@ -26,4 +26,7 @@ urlpatterns = [
     path('E/',include('Employee.urls'))
 ]
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+admin.autodiscover()
+admin.site.enable_nav_sidebar = False
 admin.site.site_header = "CTTC Feedback Administration"
+admin.site.site_title = "CFS"

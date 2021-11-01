@@ -77,23 +77,25 @@
             <nav class="navbar-mobile">
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
-                        
+
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-copy"></i>Actions</a>
                             <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                <!--
                                 <li>
                                     <a href="#">Register Staff</a>
                                 </li>
                                 <li>
                                     <a href="#">Register Trainee</a>
                                 </li>
+                                -->
                                 <li>
                                     <a href="{% url 'bulkcreate' %}">Bulk Register Trainee</a>
                                 </li>
                             </ul>
                         </li>
-                       
+
                     </ul>
                 </div>
             </nav>
@@ -151,23 +153,27 @@
                             <img  src="{% static 'img/default_avatar.png' %}" alt=""/>
                             {% endif %}
                         </div>
-                        <h5 class="text-sm-center">{{name}}</h5>
+
+                        <h5 class="text-sm-center pt-sm-4">{{name}}</h5>
+
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-copy"></i>Actions</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <!--
                                 <li>
                                     <a href="#">Register Staff</a>
                                 </li>
                                 <li>
                                     <a href="#">Register Trainee</a>
                                 </li>
+                                -->
                                 <li>
                                     <a href="{% url 'bulkcreate' %}">Bulk Register Trainee</a>
                                 </li>
                             </ul>
                         </li>
-                        
+
                     </ul>
                 </nav>
             </div>
@@ -230,7 +236,7 @@
                 </div>
             </header>
             <!-- HEADER DESKTOP-->
-                
+
             <!-- MAIN CONTENT-->
                 {% block content %}{% endblock %}
             <!-- END MAIN CONTENT-->
