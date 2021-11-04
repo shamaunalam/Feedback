@@ -54,7 +54,7 @@
                                         
                                     </div>
                                     <hr>
-                                    {% elif not element.is_hidden and element.label != 'Course id' and element.label != 'How do you rate Safety?' and element.label != 'How do you rate Training Admin Response?' and element.label != 'How do you rate Cafeteria?' and element.label != 'How do you rate Sanitation?' %}
+                                    {% elif not element.is_hidden and element.label != 'Course id' and element.label != 'How do you rate Safety?' and element.label != 'How do you rate Training Admin Response?' and element.label != 'How do you rate Cafeteria?' and element.label != 'How do you rate Sanitation?' and element.label != 'Whether Course Duration is' and element.label != 'Course To Be recommended' %}
                                     <div class="row form-group">
                                         <div class="col-lg-6">
                                             <label for="{{ element.id_for_label }}" class=" form-control-label"><strong>{{ element.label }}</strong></label>
@@ -66,12 +66,12 @@
                                             &nbsp;
                                         </div>  -->
                                         <div class="col-12 col-md-9">
-                                            <span>2-4 Poor&nbsp;&nbsp;|&nbsp;&nbsp;5-6 Average&nbsp;&nbsp;|&nbsp;&nbsp;7-8 Good&nbsp;&nbsp;|&nbsp;&nbsp;9-10 Excellent</span>
+                                            <p class="text-right">2-4 Poor&nbsp;&nbsp;|&nbsp;&nbsp;5-6 Average&nbsp;&nbsp;|&nbsp;&nbsp;7-8 Good&nbsp;&nbsp;|&nbsp;&nbsp;9-10 Excellent</p>
                                         </div> 
                                     </div>
                                     <br>
                                     <hr>
-                                    {% elif element.label == 'How do you rate Safety?' or element.label == 'How do you rate Training Admin Response?' or element.label == 'How do you rate Cafeteria?' or element.label == 'How do you rate Sanitation?' %}
+                                    {% elif element.label == 'How do you rate Safety?' or element.label == 'How do you rate Training Admin Response?' or element.label == 'How do you rate Cafeteria?' or element.label == 'How do you rate Sanitation?' or element.label == 'Whether Course Duration is' or element.label == 'Course To Be recommended' %}
                                     <div class="row form-group">
                                         <div class="col-lg-6">
                                             <label for="{{ element.id_for_label }}" class=" form-control-label"><strong>{{ element.label }}</strong></label>
@@ -85,9 +85,6 @@
                                         <div class="col-12 col-md-9">
                                             &nbsp;
                                         </div> 
-                                        {% comment %} <div class="col-12 col-md-9">
-                                            <span>2-4 Poor&nbsp;&nbsp;|&nbsp;&nbsp;5-6 Average&nbsp;&nbsp;|&nbsp;&nbsp;7-8 Good&nbsp;&nbsp;|&nbsp;&nbsp;9-10 Excellent</span>
-                                        </div>  {% endcomment %}
                                     </div>
                                     <br>
                                     <hr>
@@ -99,12 +96,7 @@
                                         <div class="col-12 col-md-9">
                                             {{ element }}
                                         </div>
-                                        {% comment %} <div class="col-12 col-md-9">
-                                            &nbsp;
-                                        </div> 
-                                        <div class="col-12 col-md-9">
-                                            <span>2-4 Poor&nbsp;&nbsp;|&nbsp;&nbsp;5-6 Average&nbsp;&nbsp;|&nbsp;&nbsp;7-8 Good&nbsp;&nbsp;|&nbsp;&nbsp;9-10 Excellent</span>
-                                        </div>  {% endcomment %}
+                                        
                                     </div>
                                     <hr>
                                     {% else %}
