@@ -200,7 +200,7 @@ def ViewConsolidatedFeedback(request,pk):
             if len(n_stars_overall)>5:
                 n_stars_overall.pop()
             
-        return render(request,'feedbackConsolidated copy.html',{"name_of_course":name_of_course,
+        return render(request,'feedbackPDF.html',{"name_of_course":name_of_course,
         "name_of_faculty":name_of_faculty,'Fac_qna':qna,'q12':q12,'a12':feedback_con[11],"amnetyQna":amnety_qna,
         'others_qna':others_qna,'duration':duration,"start":start_date,"end":end_date,"timing":timing,'number':number,
         'total_faculty_score':total_faculty_score,'avg_faculty_score':avg_faculty_score,'total_overall_score':total_overall_score,
