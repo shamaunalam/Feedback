@@ -38,52 +38,52 @@ def create_consolidated(feedbacks):
     a18_counts = [[n.A18 for n in feedbacks].count(i) for i in ["Y","N"]]
 
     zeroone = lambda x:1 if x==0 else x
-    a1_dic = {'c2_4':sum(a1_counts[:3]),'t2_4':a1_counts[0]*2+a1_counts[1]*3+a1_counts[2]*4,'c5_6':sum(a1_counts[3:5]),'t5_6':a1_counts[3]*5+a1_counts[4]*6,'c7_8':sum(a1_counts[5:7]),'t7_8':a1_counts[5]*7+a1_counts[6]*7,'c9_10':sum(a1_counts[7:9]),'t9_10':a1_counts[7]*9+a1_counts[8]*10}
+    a1_dic = {'c2_4':sum(a1_counts[:3]),'t2_4':sum(a1_counts[:3])*3,'c5_6':sum(a1_counts[3:5]),'t5_6':sum(a1_counts[3:5])*5.5,'c7_8':sum(a1_counts[5:7]),'t7_8':sum(a1_counts[5:7])*7.5,'c9_10':sum(a1_counts[7:9]),'t9_10':sum(a1_counts[7:9])*9.5}
     a1_dic.update({"st":a1_dic['t2_4']+a1_dic['t5_6']+a1_dic['t7_8']+a1_dic['t9_10']})
     a1_dic.update({'avg':round(a1_dic['st']/zeroone(sum(a1_counts)),2)})
 
-    a2_dic = {'c2_4':sum(a2_counts[:3]),'t2_4':a2_counts[0]*2+a2_counts[1]*3+a2_counts[2]*4,'c5_6':sum(a2_counts[3:5]),'t5_6':a2_counts[3]*5+a2_counts[4]*6,'c7_8':sum(a2_counts[5:7]),'t7_8':a2_counts[5]*7+a2_counts[6]*7,'c9_10':sum(a2_counts[7:9]),'t9_10':a2_counts[7]*9+a2_counts[8]*10}
+    a2_dic = {'c2_4':sum(a2_counts[:3]),'t2_4':sum(a2_counts[:3])*3,'c5_6':sum(a2_counts[3:5]),'t5_6':sum(a2_counts[3:5])*5.5,'c7_8':sum(a2_counts[5:7]),'t7_8':sum(a2_counts[5:7])*7.5,'c9_10':sum(a2_counts[7:9]),'t9_10':sum(a2_counts[7:9])*9.5}
     a2_dic.update({"st":a2_dic['t2_4']+a1_dic['t5_6']+a2_dic['t7_8']+a2_dic['t9_10']})
     a2_dic.update({'avg':round(a2_dic['st']/zeroone(sum(a2_counts)),2)})   
     
-    a3_dic = {'c2_4':sum(a3_counts[:3]),'t2_4':a3_counts[0]*2+a3_counts[1]*3+a3_counts[2]*4,'c5_6':sum(a3_counts[3:5]),'t5_6':a3_counts[3]*5+a3_counts[4]*6,'c7_8':sum(a3_counts[5:7]),'t7_8':a3_counts[5]*7+a3_counts[6]*7,'c9_10':sum(a3_counts[7:9]),'t9_10':a3_counts[7]*9+a3_counts[8]*10}
+    a3_dic = {'c2_4':sum(a3_counts[:3]),'t2_4':sum(a3_counts[:3])*3,'c5_6':sum(a3_counts[3:5]),'t5_6':sum(a3_counts[3:5])*5.5,'c7_8':sum(a3_counts[5:7]),'t7_8':sum(a3_counts[5:7])*7.5,'c9_10':sum(a3_counts[7:9]),'t9_10':sum(a3_counts[7:9])*9.5}
     a3_dic.update({"st":a3_dic['t2_4']+a3_dic['t5_6']+a3_dic['t7_8']+a3_dic['t9_10']})
-    a3_dic.update({'avg':round(a3_dic['st']/zeroone(sum(a3_counts)),2)})    
+    a3_dic.update({'avg':round(a3_dic['st']/zeroone(sum(a3_counts)),2)})
     
-    a4_dic = {'c2_4':sum(a4_counts[:3]),'t2_4':a4_counts[0]*2+a4_counts[1]*3+a4_counts[2]*4,'c5_6':sum(a4_counts[3:5]),'t5_6':a4_counts[3]*5+a4_counts[4]*6,'c7_8':sum(a4_counts[5:7]),'t7_8':a4_counts[5]*7+a4_counts[6]*7,'c9_10':sum(a4_counts[7:9]),'t9_10':a4_counts[7]*9+a4_counts[8]*10}
+    a4_dic = {'c2_4':sum(a4_counts[:3]),'t2_4':sum(a4_counts[:3])*3,'c5_6':sum(a4_counts[3:5]),'t5_6':sum(a4_counts[3:5])*5.5,'c7_8':sum(a4_counts[5:7]),'t7_8':sum(a4_counts[5:7])*7.5,'c9_10':sum(a4_counts[7:9]),'t9_10':sum(a4_counts[7:9])*9.5}
     a4_dic.update({"st":a4_dic['t2_4']+a4_dic['t5_6']+a4_dic['t7_8']+a4_dic['t9_10']})
     a4_dic.update({'avg':round(a4_dic['st']/zeroone(sum(a4_counts)),2)})   
     
-    a5_dic = {'c2_4':sum(a5_counts[:3]),'t2_4':a5_counts[0]*2+a5_counts[1]*3+a5_counts[2]*4,'c5_6':sum(a5_counts[3:5]),'t5_6':a5_counts[3]*5+a5_counts[4]*6,'c7_8':sum(a5_counts[5:7]),'t7_8':a5_counts[5]*7+a5_counts[6]*7,'c9_10':sum(a5_counts[7:9]),'t9_10':a5_counts[7]*9+a5_counts[8]*10}
+    a5_dic = {'c2_4':sum(a5_counts[:3]),'t2_4':sum(a5_counts[:3])*3,'c5_6':sum(a5_counts[3:5]),'t5_6':sum(a5_counts[3:5])*5.5,'c7_8':sum(a5_counts[5:7]),'t7_8':sum(a5_counts[5:7])*7.5,'c9_10':sum(a5_counts[7:9]),'t9_10':sum(a5_counts[7:9])*9.5}
     a5_dic.update({"st":a5_dic['t2_4']+a5_dic['t5_6']+a5_dic['t7_8']+a5_dic['t9_10']})
     a5_dic.update({'avg':round(a5_dic['st']/zeroone(sum(a5_counts)),2)})
     
-    a6_dic = {'c2_4':sum(a6_counts[:3]),'t2_4':a6_counts[0]*2+a6_counts[1]*3+a6_counts[2]*4,'c5_6':sum(a6_counts[3:5]),'t5_6':a6_counts[3]*5+a6_counts[4]*6,'c7_8':sum(a6_counts[5:7]),'t7_8':a6_counts[5]*7+a6_counts[6]*7,'c9_10':sum(a6_counts[7:9]),'t9_10':a6_counts[7]*9+a6_counts[8]*10}
+    a6_dic = {'c2_4':sum(a6_counts[:3]),'t2_4':sum(a6_counts[:3])*3,'c5_6':sum(a6_counts[3:5]),'t5_6':sum(a6_counts[3:5])*5.5,'c7_8':sum(a6_counts[5:7]),'t7_8':sum(a6_counts[5:7])*7.5,'c9_10':sum(a6_counts[7:9]),'t9_10':sum(a6_counts[7:9])*9.5}
     a6_dic.update({"st":a6_dic['t2_4']+a6_dic['t5_6']+a6_dic['t7_8']+a6_dic['t9_10']})
     a6_dic.update({'avg':round(a6_dic['st']/zeroone(sum(a6_counts)),2)})    
     
-    a7_dic = {'c2_4':sum(a7_counts[:3]),'t2_4':a7_counts[0]*2+a7_counts[1]*3+a7_counts[2]*4,'c5_6':sum(a7_counts[3:5]),'t5_6':a7_counts[3]*5+a7_counts[4]*6,'c7_8':sum(a7_counts[5:7]),'t7_8':a7_counts[5]*7+a7_counts[6]*7,'c9_10':sum(a7_counts[7:9]),'t9_10':a7_counts[7]*9+a7_counts[8]*10}
+    a7_dic = {'c2_4':sum(a7_counts[:3]),'t2_4':sum(a7_counts[:3])*3,'c5_6':sum(a7_counts[3:5]),'t5_6':sum(a7_counts[3:5])*5.5,'c7_8':sum(a7_counts[5:7]),'t7_8':sum(a7_counts[5:7])*7.5,'c9_10':sum(a7_counts[7:9]),'t9_10':sum(a7_counts[7:9])*9.5}
     a7_dic.update({"st":a7_dic['t2_4']+a7_dic['t5_6']+a7_dic['t7_8']+a7_dic['t9_10']})
     a7_dic.update({'avg':round(a7_dic['st']/zeroone(sum(a7_counts)),2)})    
     
-    a8_dic = {'c2_4':sum(a8_counts[:3]),'t2_4':a8_counts[0]*2+a8_counts[1]*3+a8_counts[2]*4,'c5_6':sum(a8_counts[3:5]),'t5_6':a8_counts[3]*5+a8_counts[4]*6,'c7_8':sum(a8_counts[5:7]),'t7_8':a8_counts[5]*7+a8_counts[6]*7,'c9_10':sum(a8_counts[7:9]),'t9_10':a8_counts[7]*9+a8_counts[8]*10}
+    a8_dic = {'c2_4':sum(a8_counts[:3]),'t2_4':sum(a8_counts[:3])*3,'c5_6':sum(a8_counts[3:5]),'t5_6':sum(a8_counts[3:5])*5.5,'c7_8':sum(a8_counts[5:7]),'t7_8':sum(a8_counts[5:7])*7.5,'c9_10':sum(a8_counts[7:9]),'t9_10':sum(a8_counts[7:9])*9.5}
     a8_dic.update({"st":a8_dic['t2_4']+a8_dic['t5_6']+a8_dic['t7_8']+a8_dic['t9_10']})
     a8_dic.update({'avg':round(a8_dic['st']/zeroone(sum(a8_counts)),2)})     
     
     
-    a9_dic = {'c2_4':sum(a9_counts[:3]),'t2_4':a9_counts[0]*2+a9_counts[1]*3+a9_counts[2]*4,'c5_6':sum(a9_counts[3:5]),'t5_6':a9_counts[3]*5+a9_counts[4]*6,'c7_8':sum(a9_counts[5:7]),'t7_8':a9_counts[5]*7+a9_counts[6]*7,'c9_10':sum(a9_counts[7:9]),'t9_10':a9_counts[7]*9+a9_counts[8]*10}
+    a9_dic = {'c2_4':sum(a9_counts[:3]),'t2_4':sum(a9_counts[:3])*3,'c5_6':sum(a9_counts[3:5]),'t5_6':sum(a9_counts[3:5])*5.5,'c7_8':sum(a9_counts[5:7]),'t7_8':sum(a9_counts[5:7])*7.5,'c9_10':sum(a9_counts[7:9]),'t9_10':sum(a9_counts[7:9])*9.5}
     a9_dic.update({"st":a9_dic['t2_4']+a9_dic['t5_6']+a9_dic['t7_8']+a9_dic['t9_10']})
     a9_dic.update({'avg':round(a9_dic['st']/zeroone(sum(a9_counts)),2)})     
     
-    a10_dic = {'c2_4':sum(a10_counts[:3]),'t2_4':a10_counts[0]*2+a10_counts[1]*3+a10_counts[2]*4,'c5_6':sum(a10_counts[3:5]),'t5_6':a10_counts[3]*5+a10_counts[4]*6,'c7_8':sum(a10_counts[5:7]),'t7_8':a10_counts[5]*7+a10_counts[6]*7,'c9_10':sum(a10_counts[7:9]),'t9_10':a10_counts[7]*9+a10_counts[8]*10}
+    a10_dic = {'c2_4':sum(a10_counts[:3]),'t2_4':sum(a10_counts[:3])*3,'c5_6':sum(a10_counts[3:5]),'t5_6':sum(a10_counts[3:5])*5.5,'c7_8':sum(a10_counts[5:7]),'t7_8':sum(a10_counts[5:7])*7.5,'c9_10':sum(a10_counts[7:9]),'t9_10':sum(a10_counts[7:9])*9.5}
     a10_dic.update({"st":a10_dic['t2_4']+a10_dic['t5_6']+a10_dic['t7_8']+a10_dic['t9_10']})
     a10_dic.update({'avg':round(a10_dic['st']/zeroone(sum(a10_counts)),2)})     
     
-    a11_dic = {'c2_4':sum(a11_counts[:3]),'t2_4':a11_counts[0]*2+a11_counts[1]*3+a11_counts[2]*4,'c5_6':sum(a11_counts[3:5]),'t5_6':a11_counts[3]*5+a11_counts[4]*6,'c7_8':sum(a11_counts[5:7]),'t7_8':a11_counts[5]*7+a11_counts[6]*7,'c9_10':sum(a11_counts[7:9]),'t9_10':a11_counts[7]*9+a11_counts[8]*10}
+    a11_dic = {'c2_4':sum(a11_counts[:3]),'t2_4':sum(a11_counts[:3])*3,'c5_6':sum(a11_counts[3:5]),'t5_6':sum(a11_counts[3:5])*5.5,'c7_8':sum(a11_counts[5:7]),'t7_8':sum(a11_counts[5:7])*7.5,'c9_10':sum(a11_counts[7:9]),'t9_10':sum(a11_counts[7:9])*9.5}
     a11_dic.update({"st":a11_dic['t2_4']+a11_dic['t5_6']+a11_dic['t7_8']+a11_dic['t9_10']})
     a11_dic.update({'avg':round(a11_dic['st']/zeroone(sum(a11_counts)),2)})     
     
-    a12_dic = {'c2_4':sum(a12_counts[:3]),'t2_4':a12_counts[0]*2+a12_counts[1]*3+a12_counts[2]*4,'c5_6':sum(a12_counts[3:5]),'t5_6':a12_counts[3]*5+a12_counts[4]*6,'c7_8':sum(a12_counts[5:7]),'t7_8':a12_counts[5]*7+a12_counts[6]*7,'c9_10':sum(a12_counts[7:9]),'t9_10':a12_counts[7]*9+a12_counts[8]*10}
+    a12_dic = {'c2_4':sum(a12_counts[:3]),'t2_4':sum(a12_counts[:3])*3,'c5_6':sum(a12_counts[3:5]),'t5_6':sum(a12_counts[3:5])*5.5,'c7_8':sum(a12_counts[5:7]),'t7_8':sum(a12_counts[5:7])*7.5,'c9_10':sum(a12_counts[7:9]),'t9_10':sum(a12_counts[7:9])*9.5}
     a12_dic.update({"st":a12_dic['t2_4']+a12_dic['t5_6']+a12_dic['t7_8']+a12_dic['t9_10']})
     a12_dic.update({'avg':round(a12_dic['st']/zeroone(sum(a12_counts)),2)})     
 
