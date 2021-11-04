@@ -7,7 +7,6 @@ from Trainee.models import CourseTaken
 from django.contrib.auth.models import User
 import openpyxl
 
-
 # util functions
 
 def feedbackToStars(feedback):
@@ -128,7 +127,7 @@ def home(request):
 
 @login_required(login_url='login')
 @user_passes_test(lambda user:user.is_staff,login_url='oops')
-def ViewConsolidatedFeedback(request,pk):
+def ViewConsolidatedFeedback(request,pk,pdf):
     course_id = pk
     faculty_questions =  FeedBackQuestions.objects.values_list("Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8","Q9","Q10","Q11","Q12","Q13","Q14","Q15","Q16","Q17","Q18")
     question_list = faculty_questions[0]
@@ -138,7 +137,7 @@ def ViewConsolidatedFeedback(request,pk):
     other_ques  = question_list[16:18]
     feedbacks = FeedBack.objects.filter(course_id=course_id)
     if feedbacks.exists():
-        name_of_course = " "+feedbacks[0].course_id.course_id
+        name_of_course = feedbacks[0].course_id.course_id
         name_of_faculty = feedbacks[0].course_id.faculty.user.first_name+" "+feedbacks[0].course_id.faculty.user.last_name
         start_date = feedbacks[0].course_id.start_date
         end_date = feedbacks[0].course_id.end_date
@@ -199,16 +198,25 @@ def ViewConsolidatedFeedback(request,pk):
 
             if len(n_stars_overall)>5:
                 n_stars_overall.pop()
-            
-        return render(request,'feedbackPDF.html',{"name_of_course":name_of_course,
-        "name_of_faculty":name_of_faculty,'Fac_qna':qna,'q12':q12,'a12':feedback_con[11],"amnetyQna":amnety_qna,
-        'others_qna':others_qna,'duration':duration,"start":start_date,"end":end_date,"timing":timing,'number':number,
-        'total_faculty_score':total_faculty_score,'avg_faculty_score':avg_faculty_score,'total_overall_score':total_overall_score,
-        'avg_overall_score':avg_overall_score,'venue':venue,'n_stars_faculty':n_stars_faculty,'n_stars_center':n_stars_center,
-        'n_stars_overall':n_stars_overall})
+        if pdf==1:
+            return render(request,'feedbackPDF.html',{"name_of_course":name_of_course,
+            "name_of_faculty":name_of_faculty,'Fac_qna':qna,'q12':q12,'a12':feedback_con[11],"amnetyQna":amnety_qna,
+            'others_qna':others_qna,'duration':duration,"start":start_date,"end":end_date,"timing":timing,'number':number,
+            'total_faculty_score':total_faculty_score,'avg_faculty_score':avg_faculty_score,'total_overall_score':total_overall_score,
+            'avg_overall_score':avg_overall_score,'venue':venue,'n_stars_faculty':n_stars_faculty,'n_stars_center':n_stars_center,
+            'n_stars_overall':n_stars_overall})
+        elif pdf==0:
+            return render(request,'feedbackConsolidated copy.html',{"name_of_course":name_of_course,
+            "name_of_faculty":name_of_faculty,'Fac_qna':qna,'q12':q12,'a12':feedback_con[11],"amnetyQna":amnety_qna,
+            'others_qna':others_qna,'duration':duration,"start":start_date,"end":end_date,"timing":timing,'number':number,
+            'total_faculty_score':total_faculty_score,'avg_faculty_score':avg_faculty_score,'total_overall_score':total_overall_score,
+            'avg_overall_score':avg_overall_score,'venue':venue,'n_stars_faculty':n_stars_faculty,'n_stars_center':n_stars_center,
+            'n_stars_overall':n_stars_overall})          
     else:
         messages.error(request,'Feedback does not exist')
         return redirect('employee-home')
+
+
 
 @login_required(login_url='login')
 @user_passes_test(lambda user:user.is_staff,login_url='oops')

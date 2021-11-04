@@ -88,7 +88,7 @@
                                                             <span class="au-checkmark"></span>
                                                         </label>
                                                     </td> -->
-                                                    <td><a class="btn btn-outline-primary btn-lg btn-block btn-sm" href="{% url 'view-consolidated' pk=course.course_id %}" role='button'>{{course.course_id}}</a></td>
+                                                    <td><a class="btn btn-outline-primary btn-lg btn-block btn-sm" href="{% url 'view-consolidated' pk=course.course_id pdf=0 %}" role='button'>{{course.course_id}}</a></td>
                                                     <td>
                                                         <!-- <span class="block-email">lori@example.com</span> -->
                                                         <strong>{{course.subject}}</strong>
