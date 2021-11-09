@@ -1,5 +1,42 @@
 {% extends 'EmployeeBase.html' %}
 {% block title %}Employee Dashboard{% endblock %}
+{% block style %}
+<style>
+ .tbody {
+  height: 480px !important;
+  overflow-y: scroll;	
+}
+
+.my-tbody {
+  height:450px;
+  display:block;
+  overflow-y:scroll;
+  width:100%;
+  text-align:center;
+}
+
+tbody {
+  width: 100%;
+}
+
+thead {
+    position: sticky;
+    top: 0;
+    background-color:gray;
+    text-align:center;
+}
+tr {
+  width: 100%;
+}
+
+td {
+  width: 100%;
+}
+.table-data2.table thead th {
+   color : white;
+}
+</style>
+{% endblock %}
 {% block content %}
 <div class="main-content">
 
@@ -63,10 +100,10 @@
                                         </div> -->
                                     </div>
                                     <div class="table-responsive table-responsive-data2">
-                                        <table class="table table-data2">
+                                        <table class="table table-data2 my-tbody">
                                             <thead>
                                                 <tr>
-                                                    <!-- <th>
+                                                    <!-- <th> 
                                                         <label class="au-checkbox">
                                                             <input type="checkbox">
                                                             <span class="au-checkmark"></span>
@@ -168,4 +205,5 @@
             });
 
 </script>
+
 {% endblock %}
